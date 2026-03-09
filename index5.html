@@ -1,0 +1,2698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="OddsMaster Pro – Expert Football Predictions, Free & VIP Tips Daily">
+<meta name="theme-color" content="#FF6B00">
+<title>OddsMaster Pro | Football Predictions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===================================================
+   DESIGN TOKENS
+=================================================== */
+:root {
+  --orange:      #FF6B00;
+  --orange-lt:   #FF8C33;
+  --orange-dk:   #CC5500;
+  --orange-dim:  rgba(255,107,0,.12);
+  --orange-glow: rgba(255,107,0,.30);
+  --dark:        #0F1013;
+  --dark2:       #16181D;
+  --dark3:       #1E2028;
+  --dark4:       #272B35;
+  --dark5:       #333845;
+  --line:        rgba(255,255,255,.07);
+  --text:        #F2F4F8;
+  --muted:       #6E7585;
+  --muted2:      #9BA3B5;
+  --win:         #22C55E;
+  --loss:        #EF4444;
+  --void:        #F59E0B;
+  --r:           14px;
+  --r-sm:        10px;
+  --nav-h:       68px;
+  --font-body:   'Plus Jakarta Sans', sans-serif;
+  --font-display:'Bebas Neue', sans-serif;
+}
+/* ===================================================
+   RESET & BASE
+=================================================== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--dark);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:var(--nav-h)}
+img{display:block;max-width:100%}
+button,a{cursor:pointer;text-decoration:none;font-family:inherit}
+
+/* ===================================================
+   TOP BAR
+=================================================== */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.9rem 1.1rem;
+  background:var(--dark2);
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:100;
+}
+.topbar-logo-img{height:44px;width:auto;display:block;object-fit:contain}
+.topbar-logo{font-family:var(--font-display);font-size:1.45rem;letter-spacing:.1em;line-height:1}
+.topbar-logo span{color:var(--orange)}
+.topbar-right{display:flex;align-items:center;gap:.6rem}
+.notif-btn{
+  position:relative;width:2.4rem;height:2.4rem;border-radius:50%;
+  background:var(--dark3);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+}
+.notif-dot{
+  width:.55rem;height:.55rem;background:var(--orange);border-radius:50%;
+  position:absolute;top:.35rem;right:.35rem;border:2px solid var(--dark2);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+.topbar-vip-btn{
+  background:linear-gradient(135deg,var(--orange),var(--orange-lt));
+  border:none;border-radius:var(--r-sm);
+  padding:.45rem .9rem;font-size:.8rem;font-weight:700;color:#fff;
+  letter-spacing:.03em;
+}
+
+/* ===================================================
+   BOTTOM NAV
+=================================================== */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;
+  height:var(--nav-h);
+  background:var(--dark2);
+  border-top:1px solid var(--line);
+  display:flex;z-index:100;
+  box-shadow:0 -4px 20px rgba(0,0,0,.4);
+}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:.22rem;
+  border:none;background:none;color:var(--muted);
+  font-size:.6rem;font-weight:600;letter-spacing:.05em;
+  font-family:var(--font-body);padding:.3rem 0 .5rem;
+  transition:color .2s;position:relative;
+}
+.nav-item svg{width:1.4rem;height:1.4rem;transition:transform .2s}
+.nav-item.active{color:var(--orange)}
+.nav-item.active svg{transform:scale(1.1)}
+.nav-item::after{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:0;height:2px;background:var(--orange);border-radius:0 0 2px 2px;
+  transition:width .2s;
+}
+.nav-item.active::after{width:2rem}
+
+/* ===================================================
+   PAGES
+=================================================== */
+.page{display:none;animation:pgIn .25s ease}
+.page.active{display:block}
+@keyframes pgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===================================================
+   SCROLL WRAPPER
+=================================================== */
+.scroll-wrap{overflow-y:auto;-webkit-overflow-scrolling:touch}
+
+/* ===================================================
+   NOTIFICATION BANNER
+=================================================== */
+.notif-banner{
+  display:flex;align-items:center;gap:.7rem;
+  margin:.9rem .9rem .4rem;
+  background:linear-gradient(135deg,rgba(255,107,0,.15),rgba(255,107,0,.06));
+  border:1px solid rgba(255,107,0,.3);
+  border-radius:var(--r-sm);padding:.75rem 1rem;
+}
+.notif-banner .nb-icon{font-size:1.25rem;flex-shrink:0}
+.notif-banner p{font-size:.82rem;color:var(--muted2);line-height:1.4}
+.notif-banner p strong{color:var(--orange)}
+
+/* ===================================================
+   HERO CARD
+=================================================== */
+.hero-card{
+  margin:.5rem .9rem .9rem;
+  background:linear-gradient(135deg,#1A0A00 0%,#221200 50%,#1A0A00 100%);
+  border:1px solid rgba(255,107,0,.35);
+  border-radius:var(--r);padding:1.4rem 1.3rem;
+  position:relative;overflow:hidden;
+}
+.hero-card::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:180px;height:180px;
+  background:radial-gradient(circle,var(--orange-glow),transparent 68%);
+}
+.hero-card::after{
+  content:'⚽';position:absolute;right:-10px;bottom:-20px;
+  font-size:5rem;opacity:.06;pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.3rem;
+  background:var(--orange);color:#fff;
+  font-size:.68rem;font-weight:800;letter-spacing:.1em;
+  padding:.25rem .65rem;border-radius:20px;margin-bottom:.75rem;
+}
+.hero-card h1{
+  font-family:var(--font-display);font-size:2.2rem;
+  letter-spacing:.06em;line-height:1.05;margin-bottom:.5rem;
+}
+.hero-card p{font-size:.82rem;color:var(--muted2);line-height:1.5}
+.hero-stats{display:flex;gap:1.4rem;margin-top:1rem}
+.hero-stat .hs-val{font-family:var(--font-display);font-size:1.9rem;color:var(--orange)}
+.hero-stat .hs-lbl{font-size:.62rem;color:var(--muted);font-weight:600;letter-spacing:.08em}
+.hero-btns{display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap}
+.btn-primary{
+  background:linear-gradient(135deg,var(--orange),var(--orange-lt));
+  border:none;border-radius:var(--r-sm);
+  padding:.7rem 1.3rem;font-size:.85rem;font-weight:700;color:#fff;
+  box-shadow:0 4px 18px var(--orange-glow);transition:opacity .2s;
+}
+.btn-primary:hover{opacity:.9}
+.btn-outline{
+  background:transparent;border:1px solid rgba(255,107,0,.4);
+  border-radius:var(--r-sm);padding:.7rem 1.1rem;
+  font-size:.85rem;font-weight:700;color:var(--orange);
+  transition:background .2s;
+}
+.btn-outline:hover{background:var(--orange-dim)}
+
+/* ===================================================
+   SECTION HEADERS
+=================================================== */
+.sec-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.9rem .9rem .5rem;
+}
+.sec-hdr h2{font-size:1rem;font-weight:800}
+.sec-hdr a{font-size:.78rem;color:var(--orange);font-weight:700}
+
+/* ===================================================
+   ACCURACY STRIP
+=================================================== */
+.acc-strip{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;padding:0 .9rem .4rem}
+.acc-card{background:var(--dark2);border:1px solid var(--line);border-radius:var(--r-sm);padding:.9rem}
+.acc-card .ac-lbl{font-size:.65rem;font-weight:700;color:var(--muted);letter-spacing:.08em;margin-bottom:.3rem}
+.acc-card .ac-val{font-family:var(--font-display);font-size:1.9rem;line-height:1}
+.acc-card .ac-val.green{color:var(--win)}
+.acc-card .ac-val.orange{color:var(--orange)}
+.acc-card .ac-sub{font-size:.65rem;color:var(--muted);margin-top:.25rem}
+.bar{height:4px;background:var(--dark4);border-radius:2px;margin-top:.5rem;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px}
+.bar-fill.g{background:var(--win)}
+.bar-fill.o{background:var(--orange)}
+
+/* ===================================================
+   MATCH CARD
+=================================================== */
+.cards-wrap{padding:0 .9rem}
+.match-card{
+  background:var(--dark2);border:1px solid var(--line);
+  border-radius:var(--r);overflow:hidden;
+  margin-bottom:.75rem;
+  transition:border-color .2s;
+}
+.match-card:hover{border-color:rgba(255,107,0,.2)}
+.mc-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.55rem .9rem;background:var(--dark3);
+  border-bottom:1px solid var(--line);gap:.4rem;
+}
+.mc-head-left{display:flex;align-items:center;gap:.35rem;min-width:0}
+.league-flag{font-size:.95rem;flex-shrink:0}
+.league-name{font-size:.7rem;font-weight:700;color:var(--muted2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mc-head-right{display:flex;flex-direction:row;align-items:center;gap:.35rem;flex-shrink:0}
+.kick-date{font-size:.62rem;font-weight:600;color:var(--muted);white-space:nowrap}
+.kick-time{
+  font-size:.7rem;font-weight:800;color:var(--orange);
+  background:var(--orange-dim);padding:.18rem .55rem;border-radius:20px;white-space:nowrap;
+}
+/* ── MATCH STATUS BADGES ── */
+.ms-badge{
+  display:inline-flex;align-items:center;gap:.3rem;
+  padding:.18rem .55rem;border-radius:20px;
+  font-size:.68rem;font-weight:800;white-space:nowrap;
+}
+.ms-notstarted{background:rgba(110,117,133,.15);color:var(--muted2);border:1px solid rgba(110,117,133,.25)}
+.ms-live{background:rgba(239,68,68,.12);color:#EF4444;border:1px solid rgba(239,68,68,.3)}
+.ms-ended{background:rgba(34,197,94,.1);color:#22C55E;border:1px solid rgba(34,197,94,.25)}
+.ms-ht{background:rgba(245,158,11,.12);color:#F59E0B;border:1px solid rgba(245,158,11,.3);animation:htpulse 1.5s ease-in-out infinite}
+@keyframes htpulse{0%,100%{opacity:1}50%{opacity:.5}}
+.ht-icon{font-size:.72rem;font-weight:900;letter-spacing:.05em}
+.live-dot{
+  width:6px;height:6px;border-radius:50%;background:#EF4444;flex-shrink:0;
+  animation:livepulse 1.2s ease-in-out infinite;
+}
+.live-min{font-size:.72rem;font-weight:900;color:#EF4444;margin-left:.1rem}
+@keyframes livepulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.4;transform:scale(1.5)}
+}
+/* live card border glow */
+.match-card.is-live{border-color:rgba(239,68,68,.35);box-shadow:0 0 0 1px rgba(239,68,68,.15)}
+.match-card.is-ended{border-color:rgba(34,197,94,.2)}
+.live-score{
+  font-family:var(--font-display);font-size:1.6rem;color:var(--orange);
+  line-height:1;margin-top:.2rem;letter-spacing:.05em;
+}
+.score-vs{
+  font-family:var(--font-display);font-size:1.4rem;color:var(--orange);
+  letter-spacing:.05em;
+}
+.mc-body{padding:.9rem}
+.teams-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.team-block{display:flex;flex-direction:column;align-items:center;gap:.45rem;flex:1}
+.crest{
+  width:48px;height:48px;border-radius:50%;
+  background:var(--dark3);border:2px solid var(--dark5);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;overflow:hidden;flex-shrink:0;
+}
+.crest img{width:100%;height:100%;object-fit:contain;border-radius:50%}
+.team-name{font-size:.75rem;font-weight:700;text-align:center;line-height:1.3}
+.vs-lbl{font-family:var(--font-display);font-size:1.1rem;color:var(--muted);flex-shrink:0}
+.pred-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:.85rem;padding-top:.75rem;border-top:1px solid var(--line);
+  gap:.5rem;flex-wrap:wrap;
+}
+.pred-chip{
+  background:var(--dark3);border:1px solid var(--dark5);
+  border-radius:20px;padding:.35rem .85rem;
+  font-size:.75rem;font-weight:700;flex:1;text-align:center;min-width:120px;
+}
+.pred-chip.locked{
+  background:rgba(255,107,0,.08);border-color:rgba(255,107,0,.25);
+  color:var(--orange);cursor:pointer;
+}
+.odds-chip{
+  background:linear-gradient(135deg,var(--orange),var(--orange-lt));
+  color:#fff;border-radius:20px;
+  padding:.35rem .85rem;font-size:.8rem;font-weight:800;
+  white-space:nowrap;
+}
+.banker-tag{
+  background:gold;color:#111;font-size:.6rem;font-weight:900;
+  padding:.15rem .5rem;border-radius:20px;margin-left:.3rem;
+  letter-spacing:.05em;vertical-align:middle;
+}
+
+/* ===================================================
+   FILTER PILLS
+=================================================== */
+.filter-row{
+  display:flex;gap:.5rem;padding:.5rem .9rem .7rem;
+  overflow-x:auto;scrollbar-width:none;
+}
+.filter-row::-webkit-scrollbar{display:none}
+.fp{
+  flex-shrink:0;padding:.4rem .9rem;
+  background:var(--dark3);border:1px solid var(--dark5);
+  border-radius:20px;font-size:.73rem;font-weight:600;
+  color:var(--muted2);transition:all .2s;
+}
+.fp.active{background:var(--orange);border-color:var(--orange);color:#fff}
+
+/* ===================================================
+   VIP SECTION
+=================================================== */
+.vip-hero{
+  margin:.9rem .9rem .6rem;
+  background:linear-gradient(135deg,#1A0A00,#221200);
+  border:1px solid rgba(255,107,0,.4);border-radius:var(--r);
+  padding:1.4rem;text-align:center;position:relative;overflow:hidden;
+}
+.vip-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(255,107,0,.22),transparent 68%);
+}
+.vip-hero h2{font-family:var(--font-display);font-size:2rem;letter-spacing:.1em;position:relative}
+.vip-hero p{font-size:.8rem;color:var(--muted2);margin-top:.4rem;position:relative}
+
+/* Currency switcher */
+.currency-bar{
+  display:flex;align-items:center;gap:.4rem;
+  padding:.4rem .9rem .3rem;overflow-x:auto;scrollbar-width:none;
+}
+.currency-bar::-webkit-scrollbar{display:none}
+.currency-bar label{font-size:.65rem;font-weight:700;color:var(--muted);white-space:nowrap;flex-shrink:0;letter-spacing:.05em}
+.curr-btn{
+  flex-shrink:0;padding:.3rem .7rem;border-radius:20px;
+  font-size:.7rem;font-weight:700;border:1px solid var(--dark5);
+  background:var(--dark3);color:var(--muted2);transition:all .2s;
+}
+.curr-btn.active{background:var(--dark4);border-color:var(--muted);color:var(--text)}
+
+/* Plans */
+.plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;padding:0 .9rem .7rem}
+.plan-card{
+  background:var(--dark2);border:2px solid var(--dark4);
+  border-radius:var(--r);padding:1.1rem .9rem 1rem;
+  text-align:center;cursor:pointer;transition:all .2s;
+  position:relative;overflow:hidden;
+}
+.plan-card.popular{border-color:var(--orange);background:rgba(255,107,0,.07)}
+.plan-best{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  background:var(--orange);color:#fff;font-size:.6rem;font-weight:900;
+  padding:.18rem .7rem;border-radius:0 0 8px 8px;letter-spacing:.08em;white-space:nowrap;
+}
+.plan-name{font-size:.68rem;font-weight:700;color:var(--muted);letter-spacing:.1em;margin-bottom:.4rem}
+.plan-price{font-family:var(--font-display);font-size:2rem;line-height:1}
+.plan-card.popular .plan-price{color:var(--orange)}
+.plan-curr{font-size:.7rem;color:var(--muted);margin-top:.15rem}
+.plan-save{font-size:.68rem;color:var(--win);font-weight:700;margin-top:.3rem}
+/* VIP Plan Info Block */
+.vip-plan-info{padding:.3rem 0 .2rem}
+.vpi-header{display:flex;align-items:center;justify-content:space-between;margin:.5rem .9rem .6rem;gap:.5rem}
+.vpi-title{font-size:.88rem;font-weight:800;color:var(--text);margin-bottom:.25rem}
+.vpi-winrate{font-size:.72rem;color:var(--orange);font-weight:600}
+.vpi-odds-badge{
+  background:rgba(255,107,0,.12);border:1px solid rgba(255,107,0,.3);
+  border-radius:var(--r-sm);padding:.4rem .7rem;text-align:center;flex-shrink:0;min-width:70px;
+  font-size:.62rem;color:var(--muted);line-height:1.4;
+}
+.vpi-odds-badge strong{display:block;font-size:1.2rem;color:var(--orange);font-family:var(--font-display);line-height:1.1}
+
+.unlock-btn{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  margin:.4rem .9rem .9rem;
+  background:linear-gradient(135deg,var(--orange),var(--orange-lt));
+  border:none;border-radius:var(--r-sm);
+  padding:.9rem;font-size:.9rem;font-weight:800;color:#fff;
+  box-shadow:0 4px 22px var(--orange-glow);
+  width:calc(100% - 1.8rem);
+  transition:transform .15s,box-shadow .15s;
+}
+.unlock-btn:active{transform:scale(.97)}
+
+/* Payment modal */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.8);
+  z-index:200;display:none;align-items:flex-end;justify-content:center;
+  backdrop-filter:blur(5px);
+}
+.modal-overlay.show{display:flex}
+.modal-sheet{
+  background:var(--dark2);border-radius:22px 22px 0 0;
+  padding:1.4rem 1.1rem 2.5rem;width:100%;max-width:520px;
+  animation:slideUp .3s cubic-bezier(.22,1,.36,1);
+  max-height:92vh;overflow-y:auto;
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:2.5rem;height:.22rem;background:var(--dark5);border-radius:2px;margin:0 auto 1.3rem}
+.modal-title{font-family:var(--font-display);font-size:1.75rem;letter-spacing:.06em;margin-bottom:.25rem}
+.modal-sub{font-size:.8rem;color:var(--muted2);margin-bottom:1.1rem}
+
+/* Country tabs in modal */
+.country-tabs{display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none;margin-bottom:.9rem;padding-bottom:.2rem}
+.country-tabs::-webkit-scrollbar{display:none}
+.pay-details{display:none;margin-bottom:.5rem}
+.pay-details.open{display:block}
+.pay-detail-box{background:var(--dark3);border:1px solid var(--orange-dim);border-radius:var(--r-sm);padding:.85rem;margin-top:.3rem}
+.pay-row{display:flex;justify-content:space-between;align-items:center;padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.82rem}
+.pay-row:last-of-type{border:none}
+.pay-row span{color:var(--muted)}
+.pay-row strong{color:var(--text);text-align:right}
+.pay-note{margin-top:.6rem;font-size:.75rem;color:var(--orange);font-weight:600;line-height:1.5;padding-top:.5rem;border-top:1px solid var(--orange-dim)}
+.ctab{
+  flex-shrink:0;padding:.4rem .85rem;border-radius:20px;
+  font-size:.75rem;font-weight:700;border:1px solid var(--dark5);
+  background:var(--dark3);color:var(--muted2);transition:all .2s;white-space:nowrap;
+}
+.ctab.active{background:var(--orange);border-color:var(--orange);color:#fff}
+
+.payment-panel{display:none}
+.payment-panel.show{display:block}
+.payment-method{
+  display:flex;align-items:center;gap:.75rem;
+  background:var(--dark3);border:1px solid var(--dark4);
+  border-radius:var(--r-sm);padding:.9rem;margin-bottom:.55rem;
+}
+.pm-icon{
+  width:2.8rem;height:2.8rem;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.25rem;flex-shrink:0;
+}
+.pm-info h3{font-size:.85rem;font-weight:700;margin-bottom:.1rem}
+.pm-info p{font-size:.72rem;color:var(--muted);line-height:1.4}
+.modal-input{
+  width:100%;background:var(--dark3);border:1px solid var(--dark5);
+  border-radius:var(--r-sm);padding:.75rem .9rem;
+  font-size:.9rem;color:var(--text);font-family:var(--font-body);
+  outline:none;margin-bottom:.6rem;
+}
+.modal-input:focus{border-color:var(--orange)}
+.modal-btn{
+  width:100%;background:linear-gradient(135deg,var(--orange),var(--orange-lt));
+  border:none;border-radius:var(--r-sm);
+  padding:.9rem;font-size:.9rem;font-weight:800;color:#fff;margin-bottom:.5rem;
+}
+.modal-cancel{
+  width:100%;background:transparent;border:1px solid var(--dark5);
+  border-radius:var(--r-sm);padding:.8rem;
+  font-size:.85rem;font-weight:600;color:var(--muted);
+}
+
+/* ===================================================
+   RESULTS
+=================================================== */
+.tab-bar{display:flex;gap:.3rem;padding:.6rem .9rem .4rem;background:var(--dark3);margin:.5rem .9rem .1rem;border-radius:var(--r-sm)}
+.tab-btn{
+  flex:1;padding:.55rem;border-radius:8px;
+  font-size:.75rem;font-weight:700;color:var(--muted);
+  border:none;background:none;font-family:var(--font-body);transition:all .2s;
+}
+.tab-btn.active{background:var(--orange);color:#fff}
+
+.result-card{
+  background:var(--dark2);border:1px solid var(--line);
+  border-radius:var(--r);margin-bottom:.6rem;overflow:hidden;
+}
+.result-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.55rem .9rem;background:var(--dark3);border-bottom:1px solid var(--line);
+}
+.result-league{font-size:.68rem;font-weight:600;color:var(--muted2)}
+.result-date{font-size:.68rem;color:var(--muted)}
+.result-body{padding:.85rem}
+.result-teams{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem}
+.r-crest{
+  width:30px;height:30px;border-radius:50%;
+  background:var(--dark3);display:flex;align-items:center;
+  justify-content:center;font-size:.9rem;overflow:hidden;flex-shrink:0;
+}
+.r-crest img{width:100%;height:100%;object-fit:contain;border-radius:50%}
+.r-match{font-size:.85rem;font-weight:700;flex:1}
+.r-score{font-family:var(--font-display);font-size:1.35rem;color:var(--orange);white-space:nowrap}
+.result-bottom{display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
+.r-pred{font-size:.75rem;color:var(--muted2)}
+.r-odds-badge{
+  font-size:.72rem;font-weight:800;color:var(--orange);
+  background:rgba(255,107,0,.1);border:1px solid rgba(255,107,0,.25);
+  border-radius:20px;padding:.2rem .55rem;white-space:nowrap;
+}
+/* Total Acca Summary Row */
+.acca-summary{
+  background:linear-gradient(135deg,rgba(255,107,0,.08),rgba(255,107,0,.04));
+  border:1px solid rgba(255,107,0,.2);border-radius:var(--r-sm);
+  padding:.65rem 1rem;margin-bottom:.5rem;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.4rem;
+}
+.acca-summary-left{font-size:.72rem;color:var(--muted2);font-weight:600}
+.acca-summary-left strong{color:var(--text);display:block;font-size:.8rem;margin-bottom:.1rem}
+.acca-total-odds{
+  font-family:var(--font-display);font-size:1.5rem;color:var(--orange);line-height:1;
+}
+.acca-total-label{font-size:.6rem;color:var(--muted);font-weight:600;letter-spacing:.08em;margin-top:.1rem}
+/* Date Group Header */
+.result-date-group{
+  font-size:.7rem;font-weight:800;color:var(--muted);letter-spacing:.1em;
+  text-transform:uppercase;padding:.4rem .2rem .3rem;margin-top:.4rem;
+}
+.status-pill{
+  display:inline-flex;align-items:center;gap:.3rem;
+  padding:.3rem .75rem;border-radius:20px;
+  font-size:.7rem;font-weight:800;letter-spacing:.05em;
+}
+.s-win{background:rgba(34,197,94,.12);color:var(--win);border:1px solid rgba(34,197,94,.25)}
+.s-loss{background:rgba(239,68,68,.12);color:var(--loss);border:1px solid rgba(239,68,68,.25)}
+.s-void{background:rgba(245,158,11,.12);color:var(--void);border:1px solid rgba(245,158,11,.25)}
+
+/* ===================================================
+   PROFILE
+=================================================== */
+.profile-hero{
+  background:var(--dark2);border-bottom:1px solid var(--line);
+  padding:1.6rem 1.1rem 1.3rem;text-align:center;
+}
+.p-avatar{
+  width:72px;height:72px;border-radius:50%;margin:0 auto .9rem;
+  background:linear-gradient(135deg,var(--orange),var(--orange-lt));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:2.2rem;color:#fff;
+}
+.p-name{font-size:1.15rem;font-weight:800;margin-bottom:.2rem}
+.p-role{font-size:.78rem;color:var(--muted)}
+.p-vip-badge{
+  display:inline-flex;align-items:center;gap:.35rem;
+  background:rgba(255,107,0,.1);border:1px solid rgba(255,107,0,.3);
+  border-radius:20px;padding:.4rem .9rem;margin-top:.7rem;
+  font-size:.78rem;font-weight:700;color:var(--orange);
+}
+.profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;padding:.9rem}
+.ps-card{background:var(--dark2);border:1px solid var(--line);border-radius:var(--r-sm);padding:.7rem;text-align:center}
+.ps-val{font-family:var(--font-display);font-size:1.6rem;color:var(--orange)}
+.ps-lbl{font-size:.6rem;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-top:.15rem}
+.menu-list{padding:.3rem .9rem .9rem}
+.menu-item{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--dark2);border:1px solid var(--line);
+  border-radius:var(--r-sm);padding:.85rem 1rem;margin-bottom:.5rem;cursor:pointer;
+  transition:background .2s;
+}
+.menu-item:hover{background:var(--dark3)}
+.mi-left{display:flex;align-items:center;gap:.75rem}
+.mi-icon{width:2.2rem;height:2.2rem;border-radius:9px;background:var(--dark3);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.mi-text h3{font-size:.85rem;font-weight:700}
+.mi-text p{font-size:.72rem;color:var(--muted);margin-top:.1rem}
+.mi-chevron{color:var(--muted);font-size:1.1rem}
+
+/* ===================================================
+   ADMIN PANEL
+=================================================== */
+.admin-lock{padding:3rem 1.1rem;text-align:center}
+.admin-lock .al-icon{font-size:3.5rem;margin-bottom:1rem}
+.admin-lock h2{font-family:var(--font-display);font-size:2rem;letter-spacing:.06em;margin-bottom:.4rem}
+.admin-lock p{font-size:.82rem;color:var(--muted);margin-bottom:1.4rem}
+.admin-lock input{
+  display:block;margin:0 auto .7rem;
+  width:min(260px,100%);
+  background:var(--dark2);border:1px solid var(--dark5);border-radius:var(--r-sm);
+  padding:.8rem 1rem;font-size:1rem;color:var(--text);
+  letter-spacing:.3em;text-align:center;font-family:var(--font-body);outline:none;
+}
+.admin-lock input:focus{border-color:var(--orange)}
+.admin-lock button{
+  background:var(--orange);border:none;border-radius:var(--r-sm);
+  padding:.8rem 2.5rem;font-size:.9rem;font-weight:700;color:#fff;
+}
+.admin-content{display:none;padding:.9rem}
+.admin-tabs{display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none;margin-bottom:.9rem}
+.admin-tabs::-webkit-scrollbar{display:none}
+.at-btn{
+  flex-shrink:0;padding:.5rem .9rem;border-radius:20px;
+  font-size:.75rem;font-weight:700;border:1px solid var(--dark5);
+  background:var(--dark3);color:var(--muted2);white-space:nowrap;
+  transition:all .2s;
+}
+.at-btn.active{background:var(--orange);border-color:var(--orange);color:#fff}
+.admin-panel{display:none;animation:pgIn .2s ease}
+.admin-panel.show{display:block}
+.ap-card{
+  background:var(--dark2);border:1px solid var(--line);
+  border-radius:var(--r);padding:1rem;margin-bottom:.9rem;
+}
+.ap-card h3{
+  font-size:.9rem;font-weight:800;margin-bottom:.9rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.ap-card h3 .dot{width:.5rem;height:.5rem;border-radius:50%;background:var(--orange)}
+.form-group{margin-bottom:.8rem}
+.form-label{display:block;font-size:.68rem;font-weight:700;color:var(--muted);letter-spacing:.08em;margin-bottom:.35rem}
+.form-input,.form-select,.form-textarea{
+  width:100%;background:var(--dark3);border:1px solid var(--dark5);
+  border-radius:var(--r-sm);padding:.7rem .85rem;
+  font-size:.85rem;color:var(--text);font-family:var(--font-body);outline:none;
+  transition:border .2s;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--orange)}
+.form-textarea{resize:vertical;min-height:70px}
+.form-grid2{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+.ap-submit{
+  width:100%;background:linear-gradient(135deg,var(--orange),var(--orange-lt));
+  border:none;border-radius:var(--r-sm);
+  padding:.8rem;font-size:.9rem;font-weight:800;color:#fff;
+}
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.ag-card{background:var(--dark3);border-radius:var(--r-sm);padding:.9rem}
+.ag-val{font-family:var(--font-display);font-size:2rem;color:var(--orange)}
+.ag-lbl{font-size:.65rem;font-weight:700;color:var(--muted);letter-spacing:.08em;margin-top:.2rem}
+.sub-table-wrap{overflow-x:auto}
+.sub-table{width:100%;border-collapse:collapse;font-size:.78rem}
+.sub-table th{
+  padding:.5rem .6rem;text-align:left;
+  font-size:.65rem;font-weight:700;color:var(--muted);letter-spacing:.08em;
+  border-bottom:1px solid var(--line);white-space:nowrap;
+}
+.sub-table td{padding:.7rem .6rem;border-bottom:1px solid rgba(255,255,255,.04)}
+.sub-table tr:last-child td{border:none}
+.badge-active{background:rgba(34,197,94,.12);color:var(--win);border:1px solid rgba(34,197,94,.3);padding:.2rem .65rem;border-radius:20px;font-size:.68rem;font-weight:800}
+.badge-pending{background:rgba(245,158,11,.12);color:var(--void);border:1px solid rgba(245,158,11,.3);padding:.2rem .65rem;border-radius:20px;font-size:.68rem;font-weight:800;cursor:pointer}
+.upd-row{display:flex;align-items:center;gap:.5rem;padding:.65rem 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.upd-row:last-child{border:none}
+.upd-match{flex:1;min-width:130px}
+.upd-match .um-teams{font-size:.8rem;font-weight:700}
+.upd-match .um-pred{font-size:.68rem;color:var(--muted)}
+.upd-row input,.upd-row select{
+  background:var(--dark3);border:1px solid var(--dark5);border-radius:8px;
+  padding:.45rem .6rem;font-size:.75rem;color:var(--text);font-family:var(--font-body);outline:none;
+}
+.upd-row input{width:90px}
+.upd-row select{width:80px}
+.upd-save{background:var(--orange);border:none;border-radius:8px;padding:.45rem .75rem;font-size:.75rem;font-weight:700;color:#fff}
+
+/* ===================================================
+   TOAST
+=================================================== */
+.toast{
+  position:fixed;bottom:calc(var(--nav-h) + .8rem);left:50%;
+  transform:translateX(-50%) translateY(10px);
+  background:var(--dark3);border:1px solid var(--line);
+  border-radius:var(--r-sm);padding:.7rem 1.2rem;
+  font-size:.82rem;font-weight:600;z-index:300;
+  opacity:0;transition:all .3s;white-space:nowrap;
+  max-width:calc(100vw - 2rem);text-align:center;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:rgba(34,197,94,.35);color:var(--win)}
+.toast.info{border-color:rgba(255,107,0,.35);color:var(--orange)}
+
+/* ===================================================
+   EMPTY STATE
+=================================================== */
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:.85rem}
+
+/* ===================================================
+   SLIDERS — TICKETS & TESTIMONIALS
+=================================================== */
+
+/* Section label */
+.slider-section{margin:.9rem 0 0}
+.slider-label{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.3rem .9rem .5rem;
+}
+.slider-label .sl-icon{font-size:1rem}
+.slider-label h3{font-size:.85rem;font-weight:800;flex:1}
+.slider-label .sl-dots{display:flex;gap:.35rem;align-items:center}
+.sl-dot{
+  width:.45rem;height:.45rem;border-radius:50%;
+  background:var(--dark5);transition:all .3s;
+}
+.sl-dot.active{background:var(--orange);width:.9rem;border-radius:3px}
+
+/* Ticket slider */
+.ticket-slider-wrap{
+  overflow:hidden;position:relative;
+  padding:.2rem 0 .6rem;
+}
+.ticket-track{
+  display:flex;gap:.75rem;
+  padding:0 .9rem;
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
+}
+.ticket-card{
+  flex-shrink:0;
+  width:200px;
+  background:var(--dark2);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  overflow:hidden;
+  position:relative;
+}
+.ticket-card-img{
+  width:100%;height:180px;
+  background:var(--dark3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;
+  overflow:hidden;
+}
+.ticket-card-img img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  object-position:top;
+  display:block;
+}
+.ticket-badge{
+  position:absolute;top:.5rem;right:.5rem;
+  background:var(--win);color:#fff;
+  font-size:.65rem;font-weight:800;letter-spacing:.05em;
+  padding:.2rem .55rem;border-radius:20px;
+}
+.ticket-info{padding:.65rem .75rem}
+.ticket-info .ti-odds{font-family:var(--font-display);font-size:1.3rem;color:var(--orange)}
+.ticket-info .ti-meta{font-size:.68rem;color:var(--muted);margin-top:.1rem}
+.ticket-info .ti-profit{font-size:.75rem;font-weight:700;color:var(--win);margin-top:.25rem}
+
+/* Shimmer placeholder for ticket images */
+.ticket-placeholder{
+  width:100%;height:140px;
+  background:linear-gradient(90deg,var(--dark3) 25%,var(--dark4) 50%,var(--dark3) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s infinite;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:.4rem;color:var(--muted);font-size:.72rem;
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.ticket-placeholder .tp-icon{font-size:2rem}
+
+/* Testimonial slider */
+.testi-track{
+  display:flex;gap:.75rem;
+  padding:0 .9rem;
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
+}
+.testi-card{
+  flex-shrink:0;
+  width:260px;
+  background:var(--dark2);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  padding:1rem;
+  position:relative;
+}
+.testi-card::before{
+  content:'"';
+  position:absolute;top:.4rem;right:.9rem;
+  font-family:Georgia,serif;font-size:3.5rem;
+  color:var(--orange-dim);line-height:1;
+  pointer-events:none;
+}
+.testi-stars{font-size:.85rem;letter-spacing:.05em;margin-bottom:.5rem}
+.testi-text{font-size:.78rem;color:var(--muted2);line-height:1.55;margin-bottom:.75rem}
+.testi-author{display:flex;align-items:center;gap:.55rem}
+.testi-avatar{
+  width:2rem;height:2rem;border-radius:50%;
+  background:linear-gradient(135deg,var(--orange),var(--orange-lt));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;font-weight:800;color:#fff;flex-shrink:0;
+  font-family:var(--font-display);
+}
+.testi-name{font-size:.78rem;font-weight:700}
+.testi-country{font-size:.65rem;color:var(--muted)}
+
+/* Divider between two sliders */
+.slider-divider{
+  height:1px;background:var(--line);
+  margin:.9rem .9rem .3rem;
+}
+
+/* ===================================================
+   RESPONSIVE TWEAKS
+=================================================== */
+@media(min-width:540px){
+  :root{--nav-h:72px}
+  .crest{width:56px;height:56px}
+  .match-card .team-name{font-size:.82rem}
+  .plans-grid{grid-template-columns:1fr 1fr}
+}
+@media(min-width:768px){
+  body{max-width:520px;margin:0 auto;box-shadow:0 0 60px rgba(0,0,0,.6)}
+  .topbar{border-radius:0}
+  .bottom-nav{max-width:520px;left:50%;transform:translateX(-50%)}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     TOP BAR
+═══════════════════════════════════════════════ -->
+<header class="topbar">
+  <img src="data:image/png;base64,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" alt="OddsMaster Pro" class="topbar-logo-img">
+  <div class="topbar-right">
+    <button class="notif-btn" onclick="showToast('🔥 Today\'s VIP 5+ Odds Accumulator is now available!','info')">
+      🔔<div class="notif-dot"></div>
+    </button>
+    <button class="topbar-vip-btn" onclick="openModal()">⚡ VIP</button>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════
+     PAGES
+═══════════════════════════════════════════════ -->
+
+<!-- ──────────── HOME ──────────── -->
+<div id="page-home" class="page active">
+
+  <div class="notif-banner">
+    <div class="nb-icon">🔥</div>
+    <p><strong>Today's VIP Tips are live!</strong> Unlock now for expert picks with high odds.</p>
+  </div>
+
+  <!-- ══ WINNING TICKETS SLIDER ══ -->
+  <div class="slider-section">
+    <div class="slider-label">
+      <span class="sl-icon">🎟️</span>
+      <h3>Recent Winning Tickets</h3>
+      <div class="sl-dots" id="ticket-dots"></div>
+    </div>
+    <div class="ticket-slider-wrap">
+      <div class="ticket-track" id="ticket-track">
+
+        <!-- TICKET 1 — placeholder (replace src with real screenshot) -->
+        <div class="ticket-card">
+          <div class="ticket-card-img ticket-placeholder">
+            <div class="tp-icon">🎫</div>
+            <span>Ticket Screenshot</span>
+          </div>
+          <div class="ticket-badge">✅ WON</div>
+          <div class="ticket-info">
+            <div class="ti-odds">Odds: 5.80</div>
+            <div class="ti-meta">5-Fold Accumulator · 08 Mar</div>
+            <div class="ti-profit">+KSh 5,800 profit</div>
+          </div>
+        </div>
+
+        <!-- TICKET 2 -->
+        <div class="ticket-card">
+          <div class="ticket-card-img ticket-placeholder">
+            <div class="tp-icon">🎫</div>
+            <span>Ticket Screenshot</span>
+          </div>
+          <div class="ticket-badge">✅ WON</div>
+          <div class="ticket-info">
+            <div class="ti-odds">Odds: 12.40</div>
+            <div class="ti-meta">10-Fold Accumulator · 07 Mar</div>
+            <div class="ti-profit">+KSh 12,400 profit</div>
+          </div>
+        </div>
+
+        <!-- TICKET 3 -->
+        <div class="ticket-card">
+          <div class="ticket-card-img ticket-placeholder">
+            <div class="tp-icon">🎫</div>
+            <span>Ticket Screenshot</span>
+          </div>
+          <div class="ticket-badge">✅ WON</div>
+          <div class="ticket-info">
+            <div class="ti-odds">Odds: 8.20</div>
+            <div class="ti-meta">Banker Tip · 06 Mar</div>
+            <div class="ti-profit">+KSh 8,200 profit</div>
+          </div>
+        </div>
+
+        <!-- TICKET 4 -->
+        <div class="ticket-card">
+          <div class="ticket-card-img ticket-placeholder">
+            <div class="tp-icon">🎫</div>
+            <span>Ticket Screenshot</span>
+          </div>
+          <div class="ticket-badge">✅ WON</div>
+          <div class="ticket-info">
+            <div class="ti-odds">Odds: 6.50</div>
+            <div class="ti-meta">5-Fold Accumulator · 05 Mar</div>
+            <div class="ti-profit">+KSh 6,500 profit</div>
+          </div>
+        </div>
+
+        <!-- TICKET 5 -->
+        <div class="ticket-card">
+          <div class="ticket-card-img ticket-placeholder">
+            <div class="tp-icon">🎫</div>
+            <span>Ticket Screenshot</span>
+          </div>
+          <div class="ticket-badge">✅ WON</div>
+          <div class="ticket-info">
+            <div class="ti-odds">Odds: 15.00</div>
+            <div class="ti-meta">10-Fold Accumulator · 04 Mar</div>
+            <div class="ti-profit">+KSh 15,000 profit</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="slider-divider"></div>
+
+  <!-- ══ CLIENT TESTIMONIALS SLIDER ══ -->
+  <div class="slider-section">
+    <div class="slider-label">
+      <span class="sl-icon">💬</span>
+      <h3>What Our Members Say</h3>
+      <div class="sl-dots" id="testi-dots"></div>
+    </div>
+    <div class="ticket-slider-wrap">
+      <div class="testi-track" id="testi-track">
+
+        <div class="testi-card">
+          <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-text">"Won KSh 12,000 on the 10-fold accumulator last Friday. These guys are serious! Best prediction site I've used."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">J</div>
+            <div><div class="testi-name">James M.</div><div class="testi-country">🇰🇪 Nairobi, Kenya</div></div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-text">"VIP tips are incredible. Won 3 accumulators in a row this week. Worth every shilling for the subscription!"</p>
+          <div class="testi-author">
+            <div class="testi-avatar">A</div>
+            <div><div class="testi-name">Amara K.</div><div class="testi-country">🇹🇿 Dar es Salaam, Tanzania</div></div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-text">"I was skeptical at first but the free tips alone are better than paid services elsewhere. Now I'm VIP and loving it!"</p>
+          <div class="testi-author">
+            <div class="testi-avatar">R</div>
+            <div><div class="testi-name">Rahul S.</div><div class="testi-country">🇮🇳 Mumbai, India</div></div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-text">"The banker tip hit yesterday at 1.22 odds. Simple money. Consistent wins every week with OddsMaster Pro."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">D</div>
+            <div><div class="testi-name">David O.</div><div class="testi-country">🇺🇬 Kampala, Uganda</div></div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-text">"Monthly VIP is worth it. I made back 10x my subscription in the first week. Highly recommended to all bettors!"</p>
+          <div class="testi-author">
+            <div class="testi-avatar">M</div>
+            <div><div class="testi-name">Maria G.</div><div class="testi-country">🇵🇭 Manila, Philippines</div></div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-text">"82% VIP win rate is real. I've tracked every tip for 2 months and they deliver. Admin replies fast too."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">P</div>
+            <div><div class="testi-name">Priya N.</div><div class="testi-country">🇳🇵 Kathmandu, Nepal</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="slider-divider"></div>
+
+  <div class="hero-card">
+    <div class="hero-badge">🏆 TODAY'S PICKS</div>
+    <h1>Expert Picks,<br>Daily Profits</h1>
+    <p>Curated football predictions with industry-leading accuracy — free and VIP.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hs-val" id="hero-free-rate">–%</div><div class="hs-lbl">FREE WON RATE</div></div>
+      <div class="hero-stat"><div class="hs-val" id="hero-vip-rate">–%</div><div class="hs-lbl">VIP WON RATE</div></div>
+      <div class="hero-stat"><div class="hs-val">3+</div><div class="hs-lbl">DAILY FREE TIPS</div></div>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showPage('free')">📋 Free Tips</button>
+      <button class="btn-outline" onclick="openModal()">⚡ Unlock VIP</button>
+    </div>
+  </div>
+
+  <div class="acc-strip">
+    <div class="acc-card">
+      <div class="ac-lbl">FREE WON RATE</div>
+      <div class="ac-val green" id="acc-free-rate">–%</div>
+      <div class="ac-sub" id="acc-free-sub">Calculating...</div>
+      <div class="bar"><div class="bar-fill g" id="acc-free-bar" style="width:0%"></div></div>
+    </div>
+    <div class="acc-card">
+      <div class="ac-lbl">VIP WON RATE</div>
+      <div class="ac-val orange" id="acc-vip-rate">–%</div>
+      <div class="ac-sub" id="acc-vip-sub">Calculating...</div>
+      <div class="bar"><div class="bar-fill o" id="acc-vip-bar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="sec-hdr"><h2>🆓 Today's Free Tips</h2><a onclick="showPage('free')">See All →</a></div>
+  <div class="cards-wrap" id="home-free"></div>
+
+  <div class="sec-hdr"><h2>⚡ VIP Preview</h2><a onclick="openModal()">Unlock →</a></div>
+  <div class="cards-wrap" id="home-vip"></div>
+
+  <div class="sec-hdr"><h2>📊 Latest Results</h2><a onclick="showPage('results')">See All →</a></div>
+  <div class="cards-wrap" id="home-results"></div>
+
+</div><!-- /home -->
+
+<!-- ──────────── FREE TIPS ──────────── -->
+<div id="page-free" class="page">
+  <div class="sec-hdr"><h2>🆓 Free Tips</h2><span style="font-size:.75rem;color:var(--muted)">Updated Daily</span></div>
+  <div class="filter-row">
+    <div class="fp active" onclick="filterFree('All',this)">All</div>
+    <div class="fp" onclick="filterFree('Match Winner',this)">Match Winner</div>
+    <div class="fp" onclick="filterFree('Over/Under',this)">Over/Under</div>
+    <div class="fp" onclick="filterFree('BTTS',this)">BTTS</div>
+    <div class="fp" onclick="filterFree('Double Chance',this)">Double Chance</div>
+  </div>
+  <div class="cards-wrap" id="free-tips-list"></div>
+</div>
+
+<!-- ──────────── VIP TIPS ──────────── -->
+<div id="page-vip" class="page">
+  <div class="vip-hero">
+    <h2>⚡ VIP TIPS</h2>
+    <p>Premium predictions unlocked after payment confirmation</p>
+  </div>
+
+  <!-- VIP Expiry Countdown -->
+  <div id="vip-expiry-bar" style="display:none;margin:.5rem .9rem;background:rgba(255,107,0,.08);border:1px solid rgba(255,107,0,.25);border-radius:var(--r-sm);padding:.6rem .9rem;font-size:.78rem;color:var(--orange);font-weight:600;text-align:center"></div>
+
+  <!-- VIP Tabs -->
+  <div class="tab-bar" style="margin:.5rem .9rem .3rem">
+    <button class="tab-btn active" onclick="switchVipTab('acc5',this)">⚡ 5+ Odds</button>
+    <button class="tab-btn" onclick="switchVipTab('acc10',this)">🔥 10+ Odds</button>
+    <button class="tab-btn" onclick="switchVipTab('banker',this)">🏆 Banker</button>
+  </div>
+
+  <!-- 5+ Odds Plan Info -->
+  <div id="vip-plan-info-acc5" class="vip-plan-info">
+    <div class="vpi-header">
+      <div>
+        <div class="vpi-title">⚡ 5+ Odds Accumulator</div>
+        <div class="vpi-winrate" id="winrate-acc5">📊 Won Rate: Calculating...</div>
+      </div>
+      <div class="vpi-odds-badge" id="total-odds-acc5">–</div>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card" onclick="selectPlan('5odds-weekly',this)" data-plan="5odds-weekly">
+        <div class="plan-name">WEEKLY</div>
+        <div class="plan-price">$10</div>
+        <div class="plan-curr">USD / week</div>
+      </div>
+      <div class="plan-card popular" onclick="selectPlan('5odds-monthly',this)" data-plan="5odds-monthly">
+        <div class="plan-best">⭐ MOST POPULAR</div>
+        <div class="plan-name">MONTHLY</div>
+        <div class="plan-price">$35</div>
+        <div class="plan-curr">USD / month</div>
+        <div class="plan-save">Save $5 vs weekly</div>
+      </div>
+    </div>
+    <button class="unlock-btn" onclick="openModal()">💳 Unlock 5+ Odds VIP — Pay Now</button>
+  </div>
+
+  <!-- 10+ Odds Plan Info -->
+  <div id="vip-plan-info-acc10" class="vip-plan-info" style="display:none">
+    <div class="vpi-header">
+      <div>
+        <div class="vpi-title">🔥 10+ Odds Accumulator</div>
+        <div class="vpi-winrate" id="winrate-acc10">📊 Won Rate: Calculating...</div>
+      </div>
+      <div class="vpi-odds-badge" id="total-odds-acc10">–</div>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card" onclick="selectPlan('10odds-weekly',this)" data-plan="10odds-weekly">
+        <div class="plan-name">WEEKLY</div>
+        <div class="plan-price">$18</div>
+        <div class="plan-curr">USD / week</div>
+      </div>
+      <div class="plan-card popular" onclick="selectPlan('10odds-monthly',this)" data-plan="10odds-monthly">
+        <div class="plan-best">🏆 BEST VALUE</div>
+        <div class="plan-name">MONTHLY</div>
+        <div class="plan-price">$55</div>
+        <div class="plan-curr">USD / month</div>
+        <div class="plan-save">Save $17 vs weekly</div>
+      </div>
+    </div>
+    <button class="unlock-btn" onclick="openModal()">💳 Unlock 10+ Odds VIP — Pay Now</button>
+  </div>
+
+  <!-- Banker Plan Info -->
+  <div id="vip-plan-info-banker" class="vip-plan-info" style="display:none">
+    <div class="vpi-header">
+      <div>
+        <div class="vpi-title">🏆 Banker Tip</div>
+        <div class="vpi-winrate" id="winrate-banker">📊 Won Rate: Calculating...</div>
+      </div>
+      <div class="vpi-odds-badge" id="total-odds-banker">–</div>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card popular" onclick="selectPlan('5odds-monthly',this)" data-plan="5odds-monthly">
+        <div class="plan-best">⭐ INCLUDED IN VIP</div>
+        <div class="plan-name">ANY VIP PLAN</div>
+        <div class="plan-price">$10+</div>
+        <div class="plan-curr">Banker included free</div>
+      </div>
+    </div>
+    <button class="unlock-btn" onclick="openModal()">💳 Unlock VIP — Get Banker Tips</button>
+  </div>
+
+  <div class="cards-wrap" id="vip-tips-list"></div>
+</div>
+
+<!-- ──────────── RESULTS ──────────── -->
+<div id="page-results" class="page">
+  <div class="sec-hdr"><h2>📊 Results</h2></div>
+  <div style="padding:0 .9rem .3rem">
+    <div class="tab-bar" style="margin:0">
+      <button class="tab-btn active" onclick="switchResultTab('yesterday',this)" id="result-tab-today">Previous</button>
+      <button class="tab-btn" onclick="switchResultTab('free',this)">Free Tips</button>
+      <button class="tab-btn" onclick="switchResultTab('vip',this)">VIP Tips</button>
+    </div>
+  </div>
+  <div class="cards-wrap" id="results-list" style="padding:.5rem .9rem"></div>
+</div>
+
+<!-- ──────────── PROFILE ──────────── -->
+<div id="page-profile" class="page">
+  <div class="profile-hero">
+    <div class="p-avatar">U</div>
+    <div class="p-name">Guest User</div>
+    <div class="p-role">Free Member</div>
+    <div class="p-vip-badge" id="vip-badge-profile">🔒 Free Plan — Upgrade to VIP</div>
+  </div>
+  <div class="profile-stats">
+    <div class="ps-card"><div class="ps-val">12</div><div class="ps-lbl">TIPS FOLLOWED</div></div>
+    <div class="ps-card"><div class="ps-val" style="color:var(--win)">67%</div><div class="ps-lbl">WIN RATE</div></div>
+    <div class="ps-card"><div class="ps-val">8</div><div class="ps-lbl">WINS</div></div>
+  </div>
+  <div class="menu-list">
+    <div class="menu-item" onclick="openModal()">
+      <div class="mi-left"><div class="mi-icon">⚡</div><div class="mi-text"><h3>Upgrade to VIP</h3><p>Get daily expert predictions</p></div></div>
+      <div class="mi-chevron">›</div>
+    </div>
+    <div class="menu-item">
+      <div class="mi-left"><div class="mi-icon">🔔</div><div class="mi-text"><h3>Notifications</h3><p>Push alerts enabled</p></div></div>
+      <div class="mi-chevron">›</div>
+    </div>
+    <div class="menu-item">
+      <div class="mi-left"><div class="mi-icon">📈</div><div class="mi-text"><h3>My Statistics</h3><p>Full win/loss history</p></div></div>
+      <div class="mi-chevron">›</div>
+    </div>
+    <div class="menu-item" onclick="showPage('admin')">
+      <div class="mi-left"><div class="mi-icon">⚙️</div><div class="mi-text"><h3>Admin Panel</h3><p>Manage site content</p></div></div>
+      <div class="mi-chevron">›</div>
+    </div>
+    <div class="menu-item">
+      <div class="mi-left"><div class="mi-icon">ℹ️</div><div class="mi-text"><h3>About</h3><p>OddsMaster Pro v2.0</p></div></div>
+      <div class="mi-chevron">›</div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────── ADMIN ──────────── -->
+<div id="page-admin" class="page">
+  <!-- Lock screen -->
+  <div id="admin-lock">
+    <div class="admin-lock">
+      <div class="al-icon">🔐</div>
+      <h2>Admin Access</h2>
+      <p>Enter your administrator password</p>
+      <input type="password" id="admin-pwd-input" placeholder="Password" maxlength="20">
+      <button onclick="checkAdminPwd()">Unlock Panel</button>
+    </div>
+  </div>
+  <!-- Admin content -->
+  <div id="admin-content" class="admin-content">
+    <div class="admin-tabs">
+      <button class="at-btn active" onclick="showAdminPanel('post',this)">📝 Post Tip</button>
+      <button class="at-btn" onclick="showAdminPanel('analytics',this)">📊 Analytics</button>
+      <button class="at-btn" onclick="showAdminPanel('subscriptions',this)">💳 Subscriptions</button>
+      <button class="at-btn" onclick="showAdminPanel('updateresults',this)">✅ Results</button>
+      <button class="at-btn" onclick="showAdminPanel('notify',this)">🔔 Notify</button>
+    </div>
+
+    <!-- POST TIP -->
+    <div id="ap-post" class="admin-panel show">
+      <div class="ap-card">
+        <h3><div class="dot"></div>Post New Prediction</h3>
+        <div class="form-grid2">
+          <div class="form-group"><label class="form-label">TEAM 1</label><input class="form-input" id="a-t1" placeholder="e.g. Arsenal"></div>
+          <div class="form-group"><label class="form-label">TEAM 2</label><input class="form-input" id="a-t2" placeholder="e.g. Chelsea"></div>
+        </div>
+        <div class="form-group"><label class="form-label">LEAGUE</label>
+          <select class="form-select" id="a-league">
+            <option>🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</option>
+            <option>🇪🇸 La Liga</option>
+            <option>🇮🇹 Serie A</option>
+            <option>🇩🇪 Bundesliga</option>
+            <option>🇫🇷 Ligue 1</option>
+            <option>🇪🇺 Champions League</option>
+            <option>🇪🇺 Europa League</option>
+            <option>🌍 Other League</option>
+          </select>
+        </div>
+        <div class="form-grid2">
+          <div class="form-group"><label class="form-label">PREDICTION TYPE</label>
+            <select class="form-select" id="a-pred-type">
+              <option>Over 2.5</option><option>Under 2.5</option>
+              <option>Over 1.5</option><option>Under 1.5</option>
+              <option>Home Win</option><option>Away Win</option><option>Draw</option>
+              <option>BTTS</option>
+              <option>Double Chance (1X)</option><option>Double Chance (X2)</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">ODDS</label><input class="form-input" id="a-odds" type="number" step="0.01" min="1" placeholder="e.g. 1.85"></div>
+        </div>
+        <div class="form-grid2">
+          <div class="form-group"><label class="form-label">KICK-OFF TIME</label><input class="form-input" id="a-time" type="time"></div>
+          <div class="form-group"><label class="form-label">SECTION</label>
+            <select class="form-select" id="a-section"><option value="free">Free Tips</option><option value="vip">VIP Tips</option></select>
+          </div>
+        </div>
+        <div class="form-group"><label class="form-label">TEAM 1 LOGO URL (optional)</label><input class="form-input" id="a-logo1" placeholder="images/arsenal.png or https://..."></div>
+        <div class="form-group"><label class="form-label">TEAM 2 LOGO URL (optional)</label><input class="form-input" id="a-logo2" placeholder="images/chelsea.png or https://..."></div>
+        <button class="ap-submit" onclick="adminPostTip()">✅ Post Prediction</button>
+      </div>
+      <div class="ap-card">
+        <h3><div class="dot"></div>Recent Posts (This Session)</h3>
+        <div id="recent-posts"><p style="font-size:.8rem;color:var(--muted)">No posts yet in this session.</p></div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS -->
+    <div id="ap-analytics" class="admin-panel">
+      <div class="ap-card">
+        <h3><div class="dot"></div>Visitor Analytics</h3>
+        <div class="analytics-grid">
+          <div class="ag-card"><div class="ag-val">320</div><div class="ag-lbl">TODAY'S VISITORS</div></div>
+          <div class="ag-card"><div class="ag-val">1,450</div><div class="ag-lbl">THIS WEEK</div></div>
+          <div class="ag-card"><div class="ag-val">8,200</div><div class="ag-lbl">TOTAL USERS</div></div>
+          <div class="ag-card"><div class="ag-val" style="color:var(--orange)">58</div><div class="ag-lbl">VIP SUBSCRIBERS</div></div>
+          <div class="ag-card"><div class="ag-val" id="stat-free-rate" style="color:var(--win)">–%</div><div class="ag-lbl">FREE WON RATE</div></div>
+          <div class="ag-card"><div class="ag-val" id="stat-vip-rate" style="color:var(--win)">–%</div><div class="ag-lbl">VIP WON RATE</div></div>
+        </div>
+        <p style="font-size:.72rem;color:var(--muted);margin-top:.75rem">📌 Connect Google Analytics for real-time tracking on live deployment.</p>
+      </div>
+    </div>
+
+    <!-- SUBSCRIPTIONS -->
+    <div id="ap-subscriptions" class="admin-panel">
+      <div class="ap-card">
+        <h3><div class="dot"></div>VIP Subscriptions</h3>
+        <div class="sub-table-wrap">
+          <table class="sub-table">
+            <tr><th>CONTACT</th><th>PLAN</th><th>AMOUNT</th><th>DATE</th><th>STATUS</th></tr>
+            <tr><td>+254712***456</td><td>Monthly</td><td>KSh 3,500</td><td>08 Mar</td><td><span class="badge-active">Active</span></td></tr>
+            <tr><td>+255723***789</td><td>Weekly</td><td>TSh 25,000</td><td>06 Mar</td><td><span class="badge-active">Active</span></td></tr>
+            <tr><td>india***@upi</td><td>Monthly</td><td>₹890</td><td>08 Mar</td><td><span class="badge-pending" onclick="confirmSub(this)">Pending ✓</span></td></tr>
+            <tr><td>+63917***654</td><td>Weekly</td><td>₱550</td><td>07 Mar</td><td><span class="badge-pending" onclick="confirmSub(this)">Pending ✓</span></td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="ap-card">
+        <h3><div class="dot"></div>Manual VIP Unlock</h3>
+        <div class="form-group"><label class="form-label">USER IDENTIFIER (phone / email)</label><input class="form-input" id="unlock-user" placeholder="e.g. +254712345678"></div>
+        <div class="form-group"><label class="form-label">PLAN</label>
+          <select class="form-select" id="unlock-plan"><option>Weekly</option><option>Monthly</option></select>
+        </div>
+        <button class="ap-submit" onclick="manualUnlock()">🔓 Unlock VIP Access</button>
+      </div>
+    </div>
+
+    <!-- UPDATE RESULTS -->
+    <div id="ap-updateresults" class="admin-panel">
+      <div class="ap-card">
+        <h3><div class="dot"></div>Update Match Results</h3>
+        <div id="update-results-list"><p style="font-size:.8rem;color:var(--muted)">Post predictions first to see them here.</p></div>
+      </div>
+    </div>
+
+    <!-- NOTIFY -->
+    <div id="ap-notify" class="admin-panel">
+      <div class="ap-card">
+        <h3><div class="dot"></div>Notification Banner</h3>
+        <div class="form-group"><label class="form-label">NOTIFICATION MESSAGE</label>
+          <textarea class="form-textarea" id="notif-msg" placeholder="e.g. 🔥 Today's VIP 5+ Odds Accumulator is Now Available!"></textarea>
+        </div>
+        <button class="ap-submit" onclick="updateNotifBanner()">📣 Update Banner</button>
+      </div>
+    </div>
+
+  </div><!-- /admin-content -->
+</div><!-- /admin -->
+
+<!-- ═══════════════════════════════════════════════
+     BOTTOM NAV
+═══════════════════════════════════════════════ -->
+<nav class="bottom-nav">
+  <button class="nav-item active" onclick="showPage('home')" id="nav-home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+    HOME
+  </button>
+  <button class="nav-item" onclick="showPage('free')" id="nav-free">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+    FREE
+  </button>
+  <button class="nav-item" onclick="showPage('vip')" id="nav-vip">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+    VIP
+  </button>
+  <button class="nav-item" onclick="showPage('results')" id="nav-results">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+    RESULTS
+  </button>
+  <button class="nav-item" onclick="showPage('profile')" id="nav-profile">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+    PROFILE
+  </button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     PAYMENT MODAL
+═══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="payment-modal" onclick="handleModalClick(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+
+    <!-- STEP 1: Choose country & see payment methods -->
+    <div id="modal-step1">
+      <div class="modal-title">⚡ Unlock VIP Tips</div>
+      <div class="modal-sub">Select your country to see available payment methods</div>
+
+      <div class="country-tabs">
+        <button class="ctab active" onclick="showPayPanel('kenya',this)">🇰🇪 Kenya</button>
+        <button class="ctab" onclick="showPayPanel('tanzania',this)">🇹🇿 Tanzania</button>
+        <button class="ctab" onclick="showPayPanel('uganda',this)">🇺🇬 Uganda</button>
+        <button class="ctab" onclick="showPayPanel('india',this)">🇮🇳 India</button>
+        <button class="ctab" onclick="showPayPanel('nepal',this)">🇳🇵 Nepal</button>
+        <button class="ctab" onclick="showPayPanel('bangladesh',this)">🇧🇩 Bangladesh</button>
+        <button class="ctab" onclick="showPayPanel('philippines',this)">🇵🇭 Philippines</button>
+        <button class="ctab" onclick="showPayPanel('usd',this)">💵 USD</button>
+      </div>
+
+      <!-- KENYA -->
+      <div class="payment-panel show" id="panel-kenya">
+        <div class="payment-method" onclick="togglePayDetails('ke-mpesa',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#00A550;font-size:1.4rem;font-weight:900;color:#fff;font-family:sans-serif">M</div>
+          <div class="pm-info"><h3>M-Pesa</h3><p style="color:var(--muted2)">Lipa na M-Pesa · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="ke-mpesa">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>Type</span><strong>Buy Goods (Till)</strong></div>
+            <div class="pay-row"><span>Till Number</span><strong style="color:var(--orange)" id="pd-ke-paybill">Loading...</strong></div>
+            <div class="pay-row"><span>5+ Odds Weekly</span><strong style="color:var(--orange)">$10 USD</strong></div>
+            <div class="pay-row"><span>5+ Odds Monthly</span><strong style="color:var(--orange)">$35 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Weekly</span><strong style="color:var(--orange)">$18 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Monthly</span><strong style="color:var(--orange)">$55 USD</strong></div>
+            <div class="pay-note">📱 How to pay via Till Number:<br>1. Open M-Pesa<br>2. Select <strong>Lipa na M-Pesa</strong><br>3. Select <strong>Buy Goods and Services</strong><br>4. Enter Till Number above<br>5. Enter amount → Enter your M-Pesa PIN<br>6. You'll receive an SMS confirmation</div>
+          </div>
+        </div>
+
+        <div class="payment-method" onclick="togglePayDetails('ke-airtel',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#E4002B;font-size:1.4rem;font-weight:900;color:#fff;font-family:sans-serif">A</div>
+          <div class="pm-info"><h3>Airtel Money</h3><p style="color:var(--muted2)">Airtel Kenya · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="ke-airtel">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>Send To</span><strong style="color:var(--orange)" id="pd-ke-airtel">Loading...</strong></div>
+            <div class="pay-row"><span>Name</span><strong>OddsMaster Pro</strong></div>
+            <div class="pay-row"><span>5+ Odds Weekly</span><strong style="color:var(--orange)">$10 USD</strong></div>
+            <div class="pay-row"><span>5+ Odds Monthly</span><strong style="color:var(--orange)">$35 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Weekly</span><strong style="color:var(--orange)">$18 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Monthly</span><strong style="color:var(--orange)">$55 USD</strong></div>
+            <div class="pay-note">📱 Go to Airtel Money → Send Money → Enter number above</div>
+          </div>
+        </div>
+
+        <div class="payment-method" onclick="togglePayDetails('ke-bank',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#0032A0;font-size:1.1rem">🏦</div>
+          <div class="pm-info"><h3>Bank Transfer</h3><p style="color:var(--muted2)">Kenya local bank · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="ke-bank">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>Bank</span><strong id="pd-ke-bank">Loading...</strong></div>
+            <div class="pay-row"><span>Account Name</span><strong>OddsMaster Pro</strong></div>
+            <div class="pay-row"><span>Account No.</span><strong style="color:var(--orange)" id="pd-ke-bankno">Loading...</strong></div>
+            <div class="pay-note">🏦 Transfer and send proof via WhatsApp below</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TANZANIA -->
+      <div class="payment-panel" id="panel-tanzania">
+        <div class="payment-method" onclick="togglePayDetails('tz-tigo',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#0099CC;font-size:1rem;font-weight:900;color:#fff;font-family:sans-serif">T</div>
+          <div class="pm-info"><h3>Tigo Pesa</h3><p style="color:var(--muted2)">Tigo Tanzania · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="tz-tigo">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>Send To</span><strong style="color:var(--orange)" id="pd-tz-tigo">Loading...</strong></div>
+            <div class="pay-row"><span>5+ Odds Weekly</span><strong style="color:var(--orange)">$10 USD</strong></div>
+            <div class="pay-row"><span>5+ Odds Monthly</span><strong style="color:var(--orange)">$35 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Weekly</span><strong style="color:var(--orange)">$18 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Monthly</span><strong style="color:var(--orange)">$55 USD</strong></div>
+            <div class="pay-note">📱 Tigo Pesa → Send Money → Enter number above</div>
+          </div>
+        </div>
+
+        <div class="payment-method" onclick="togglePayDetails('tz-mpesa',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#E4002B;font-size:1.4rem;font-weight:900;color:#fff;font-family:sans-serif">M</div>
+          <div class="pm-info"><h3>Vodacom M-Pesa</h3><p style="color:var(--muted2)">Vodacom Tanzania · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="tz-mpesa">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>Send To</span><strong style="color:var(--orange)" id="pd-tz-mpesa">Loading...</strong></div>
+            <div class="pay-row"><span>5+ Odds Weekly</span><strong style="color:var(--orange)">$10 USD</strong></div>
+            <div class="pay-row"><span>5+ Odds Monthly</span><strong style="color:var(--orange)">$35 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Weekly</span><strong style="color:var(--orange)">$18 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Monthly</span><strong style="color:var(--orange)">$55 USD</strong></div>
+            <div class="pay-note">📱 M-Pesa → Send Money → Enter number above</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UGANDA -->
+      <div class="payment-panel" id="panel-uganda">
+        <div class="payment-method" onclick="togglePayDetails('ug-mtn',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#FFCC00;font-size:1rem;font-weight:900;color:#111;font-family:sans-serif">MTN</div>
+          <div class="pm-info"><h3>MTN Mobile Money</h3><p style="color:var(--muted2)">MTN Uganda · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="ug-mtn">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>Send To</span><strong style="color:var(--orange)" id="pd-ug-mtn">Loading...</strong></div>
+            <div class="pay-row"><span>5+ Odds Weekly</span><strong style="color:var(--orange)">$10 USD</strong></div>
+            <div class="pay-row"><span>5+ Odds Monthly</span><strong style="color:var(--orange)">$35 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Weekly</span><strong style="color:var(--orange)">$18 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Monthly</span><strong style="color:var(--orange)">$55 USD</strong></div>
+            <div class="pay-note">📱 MTN MoMo → Send Money → Enter number above</div>
+          </div>
+        </div>
+
+        <div class="payment-method" onclick="togglePayDetails('ug-airtel',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#E4002B;font-size:1.4rem;font-weight:900;color:#fff;font-family:sans-serif">A</div>
+          <div class="pm-info"><h3>Airtel Money</h3><p style="color:var(--muted2)">Airtel Uganda · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="ug-airtel">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>Send To</span><strong style="color:var(--orange)" id="pd-ug-airtel">Loading...</strong></div>
+            <div class="pay-row"><span>5+ Odds Weekly</span><strong style="color:var(--orange)">$10 USD</strong></div>
+            <div class="pay-row"><span>5+ Odds Monthly</span><strong style="color:var(--orange)">$35 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Weekly</span><strong style="color:var(--orange)">$18 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Monthly</span><strong style="color:var(--orange)">$55 USD</strong></div>
+            <div class="pay-note">📱 Airtel Money → Send Money → Enter number above</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INDIA -->
+      <div class="payment-panel" id="panel-india">
+        <div class="payment-method" onclick="togglePayDetails('in-upi',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#4285F4;font-size:1rem;font-weight:900;color:#fff;font-family:sans-serif">UPI</div>
+          <div class="pm-info"><h3>UPI / Google Pay</h3><p style="color:var(--muted2)">GPay, PhonePe · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="in-upi">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>UPI ID</span><strong style="color:var(--orange)" id="pd-in-upi">Loading...</strong></div>
+            <div class="pay-row"><span>5+ Odds Weekly</span><strong style="color:var(--orange)">$10 USD</strong></div>
+            <div class="pay-row"><span>5+ Odds Monthly</span><strong style="color:var(--orange)">$35 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Weekly</span><strong style="color:var(--orange)">$18 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Monthly</span><strong style="color:var(--orange)">$55 USD</strong></div>
+            <div class="pay-note">📱 Open GPay/PhonePe → Send → Enter UPI ID above</div>
+          </div>
+        </div>
+
+        <div class="payment-method" onclick="togglePayDetails('in-paytm',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#00B9F1;font-size:1rem;font-weight:900;color:#fff;font-family:sans-serif">Pay</div>
+          <div class="pm-info"><h3>Paytm</h3><p style="color:var(--muted2)">Paytm wallet · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="in-paytm">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>Paytm No.</span><strong style="color:var(--orange)" id="pd-in-paytm">Loading...</strong></div>
+            <div class="pay-row"><span>5+ Odds Weekly</span><strong style="color:var(--orange)">$10 USD</strong></div>
+            <div class="pay-row"><span>5+ Odds Monthly</span><strong style="color:var(--orange)">$35 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Weekly</span><strong style="color:var(--orange)">$18 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Monthly</span><strong style="color:var(--orange)">$55 USD</strong></div>
+            <div class="pay-note">📱 Paytm → Pay → Enter number above</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEPAL -->
+      <div class="payment-panel" id="panel-nepal">
+        <div class="payment-method" onclick="togglePayDetails('np-esewa',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#60A917;font-size:1rem;font-weight:900;color:#fff;font-family:sans-serif">eS</div>
+          <div class="pm-info"><h3>eSewa</h3><p style="color:var(--muted2)">eSewa wallet · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="np-esewa">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>eSewa ID</span><strong style="color:var(--orange)" id="pd-np-esewa">Loading...</strong></div>
+            <div class="pay-row"><span>5+ Odds Weekly</span><strong style="color:var(--orange)">$10 USD</strong></div>
+            <div class="pay-row"><span>5+ Odds Monthly</span><strong style="color:var(--orange)">$35 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Weekly</span><strong style="color:var(--orange)">$18 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Monthly</span><strong style="color:var(--orange)">$55 USD</strong></div>
+            <div class="pay-note">📱 eSewa → Send Money → Enter ID above</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BANGLADESH -->
+      <div class="payment-panel" id="panel-bangladesh">
+        <div class="payment-method" onclick="togglePayDetails('bd-bkash',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#E4002B;font-size:1rem;font-weight:900;color:#fff;font-family:sans-serif">bK</div>
+          <div class="pm-info"><h3>bKash</h3><p style="color:var(--muted2)">bKash mobile · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="bd-bkash">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>bKash No.</span><strong style="color:var(--orange)" id="pd-bd-bkash">Loading...</strong></div>
+            <div class="pay-row"><span>5+ Odds Weekly</span><strong style="color:var(--orange)">$10 USD</strong></div>
+            <div class="pay-row"><span>5+ Odds Monthly</span><strong style="color:var(--orange)">$35 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Weekly</span><strong style="color:var(--orange)">$18 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Monthly</span><strong style="color:var(--orange)">$55 USD</strong></div>
+            <div class="pay-note">📱 bKash → Send Money → Enter number above</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHILIPPINES -->
+      <div class="payment-panel" id="panel-philippines">
+        <div class="payment-method" onclick="togglePayDetails('ph-gcash',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#007DFF;font-size:1rem;font-weight:900;color:#fff;font-family:sans-serif">GC</div>
+          <div class="pm-info"><h3>GCash</h3><p style="color:var(--muted2)">GCash wallet · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="ph-gcash">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>GCash No.</span><strong style="color:var(--orange)" id="pd-ph-gcash">Loading...</strong></div>
+            <div class="pay-row"><span>5+ Odds Weekly</span><strong style="color:var(--orange)">$10 USD</strong></div>
+            <div class="pay-row"><span>5+ Odds Monthly</span><strong style="color:var(--orange)">$35 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Weekly</span><strong style="color:var(--orange)">$18 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Monthly</span><strong style="color:var(--orange)">$55 USD</strong></div>
+            <div class="pay-note">📱 GCash → Send Money → Enter number above</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- USD -->
+      <div class="payment-panel" id="panel-usd">
+        <div class="payment-method" onclick="togglePayDetails('usd-paypal',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#00457C;font-size:1.1rem">💙</div>
+          <div class="pm-info"><h3>PayPal</h3><p style="color:var(--muted2)">International · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="usd-paypal">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>PayPal Email</span><strong style="color:var(--orange)" id="pd-usd-paypal">Loading...</strong></div>
+            <div class="pay-row"><span>5+ Odds Weekly</span><strong style="color:var(--orange)">$10 USD</strong></div>
+            <div class="pay-row"><span>5+ Odds Monthly</span><strong style="color:var(--orange)">$35 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Weekly</span><strong style="color:var(--orange)">$18 USD</strong></div>
+            <div class="pay-row"><span>10+ Odds Monthly</span><strong style="color:var(--orange)">$55 USD</strong></div>
+            <div class="pay-note">💙 PayPal → Send Money → Friends & Family → Enter email above</div>
+          </div>
+        </div>
+
+        <div class="payment-method" onclick="togglePayDetails('usd-wire',this)" style="cursor:pointer">
+          <div class="pm-icon" style="background:#0032A0;font-size:1.1rem">🏦</div>
+          <div class="pm-info"><h3>Wire / SWIFT</h3><p style="color:var(--muted2)">International bank · Tap to see details</p></div>
+          <span style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</span>
+        </div>
+        <div class="pay-details" id="usd-wire">
+          <div class="pay-detail-box">
+            <div class="pay-row"><span>Bank</span><strong id="pd-usd-bank">Loading...</strong></div>
+            <div class="pay-row"><span>Account Name</span><strong>OddsMaster Pro</strong></div>
+            <div class="pay-row"><span>SWIFT</span><strong style="color:var(--orange)" id="pd-usd-swift">Loading...</strong></div>
+            <div class="pay-note">🏦 Transfer via your bank app and send proof below</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIVIDER -->
+      <div style="border-top:1px solid var(--line);margin:.9rem 0 .75rem"></div>
+
+      <!-- HOW IT WORKS -->
+      <div style="background:var(--dark3);border:1px solid var(--dark5);border-radius:var(--r-sm);padding:.75rem 1rem;margin-bottom:.8rem;display:flex;gap:.6rem;align-items:flex-start">
+        <span style="font-size:1.1rem;flex-shrink:0">💡</span>
+        <p style="font-size:.76rem;color:var(--muted2);line-height:1.6">
+          <strong style="color:var(--text)">How it works:</strong>
+          Choose your payment method above →
+          Contact us to get payment details →
+          Pay →
+          Email us your <strong style="color:var(--text)">screenshot + phone + transaction ID</strong>.
+        </p>
+      </div>
+
+      <!-- STEP 1: Request payment details -->
+      <p style="font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:.55rem">📩 Step 1 — Request payment details from us:</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.9rem">
+        <!-- ⚠️ Replace 254700000000 with your number e.g. 254712345678 (no + sign) -->
+        <a href="https://wa.me/254700000000?text=Hi%2C%20I%20want%20to%20subscribe%20to%20OddsMaster%20Pro%20VIP%20Tips.%20Please%20send%20me%20payment%20details."
+           target="_blank"
+           style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#25D366;border-radius:var(--r-sm);padding:.78rem;font-size:.82rem;font-weight:800;color:#fff;text-decoration:none">
+          <span style="font-size:1.1rem">💬</span> WhatsApp
+        </a>
+        <!-- ⚠️ Replace oddsmaster.demo@gmail.com with your real email address -->
+        <a href="mailto:oddsmaster.demo@gmail.com?subject=VIP%20Tips%20-%20Payment%20Details%20Request&body=Hi%2C%20I%20want%20to%20subscribe%20to%20OddsMaster%20Pro%20VIP%20Tips.%20Please%20send%20me%20payment%20details.%0A%0AMy%20name%3A%20%0AMy%20phone%3A%20%0APlan%20I%20want%3A%20Weekly%20%2F%20Monthly"
+           style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:var(--dark4);border:1px solid var(--dark5);border-radius:var(--r-sm);padding:.78rem;font-size:.82rem;font-weight:800;color:var(--text);text-decoration:none">
+          <span style="font-size:1.1rem">📧</span> Email Us
+        </a>
+      </div>
+
+      <!-- DIVIDER -->
+      <div style="border-top:1px solid var(--line);margin:.75rem 0"></div>
+
+      <!-- STEP 2: Submit payment proof in-app -->
+      <p style="font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:.5rem">✅ Step 2 — Submit your payment details below:</p>
+      <p style="font-size:.75rem;color:var(--muted2);margin-bottom:.85rem;line-height:1.55">
+        After paying, fill in the form below. We will verify and activate your VIP access within <strong style="color:var(--orange)">5 minutes</strong>.
+      </p>
+
+      <div id="pay-form-wrap">
+        <div style="margin-bottom:.65rem">
+          <label style="display:block;font-size:.68rem;font-weight:700;color:var(--muted);letter-spacing:.08em;margin-bottom:.3rem">YOUR NAME</label>
+          <input id="pay-name" type="text" placeholder="e.g. James Mwangi"
+            style="width:100%;background:var(--dark3);border:1px solid var(--dark5);border-radius:var(--r-sm);padding:.75rem .9rem;font-size:.85rem;color:var(--text);font-family:var(--font-body);outline:none">
+        </div>
+        <div style="margin-bottom:.65rem">
+          <label style="display:block;font-size:.68rem;font-weight:700;color:var(--muted);letter-spacing:.08em;margin-bottom:.3rem">PHONE NUMBER USED FOR PAYMENT</label>
+          <input id="pay-phone" type="tel" placeholder="e.g. +254712345678"
+            style="width:100%;background:var(--dark3);border:1px solid var(--dark5);border-radius:var(--r-sm);padding:.75rem .9rem;font-size:.85rem;color:var(--text);font-family:var(--font-body);outline:none">
+        </div>
+        <div style="margin-bottom:.65rem">
+          <label style="display:block;font-size:.68rem;font-weight:700;color:var(--muted);letter-spacing:.08em;margin-bottom:.3rem">TRANSACTION ID / MPESA CODE</label>
+          <input id="pay-txid" type="text" placeholder="e.g. QGH7X2K4P1"
+            style="width:100%;background:var(--dark3);border:1px solid var(--dark5);border-radius:var(--r-sm);padding:.75rem .9rem;font-size:.85rem;color:var(--text);font-family:var(--font-body);outline:none;text-transform:uppercase">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.65rem">
+          <div>
+            <label style="display:block;font-size:.68rem;font-weight:700;color:var(--muted);letter-spacing:.08em;margin-bottom:.3rem">PLAN</label>
+            <select id="pay-plan" style="width:100%;background:var(--dark3);border:1px solid var(--dark5);border-radius:var(--r-sm);padding:.75rem .7rem;font-size:.85rem;color:var(--text);font-family:var(--font-body);outline:none">
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-size:.68rem;font-weight:700;color:var(--muted);letter-spacing:.08em;margin-bottom:.3rem">PAYMENT METHOD</label>
+            <select id="pay-method" style="width:100%;background:var(--dark3);border:1px solid var(--dark5);border-radius:var(--r-sm);padding:.75rem .7rem;font-size:.85rem;color:var(--text);font-family:var(--font-body);outline:none">
+              <option>M-Pesa</option>
+              <option>Airtel Money</option>
+              <option>MTN Mobile Money</option>
+              <option>Tigo Pesa</option>
+              <option>Vodacom M-Pesa</option>
+              <option>UPI/Google Pay</option>
+              <option>bKash</option>
+              <option>GCash</option>
+              <option>PayPal</option>
+              <option>Bank Transfer</option>
+            </select>
+          </div>
+        </div>
+        <div id="pay-submit-err" style="color:#EF4444;font-size:.75rem;margin-bottom:.5rem;min-height:1rem"></div>
+        <button onclick="submitPaymentProof()"
+          style="width:100%;background:linear-gradient(135deg,var(--orange),var(--orange-lt));border:none;border-radius:var(--r-sm);padding:.9rem;font-size:.9rem;font-weight:800;color:#fff;box-shadow:0 4px 18px var(--orange-glow);margin-bottom:.5rem">
+          🚀 Submit Payment for Verification
+        </button>
+      </div>
+
+      <div id="pay-success-msg" style="display:none;text-align:center;padding:1rem 0">
+        <div style="font-size:2rem;margin-bottom:.5rem">✅</div>
+        <div style="font-weight:800;font-size:1rem;margin-bottom:.3rem">Payment Submitted!</div>
+        <div style="font-size:.78rem;color:var(--muted2);line-height:1.6">Your payment is being verified. VIP access will be activated within <strong style="color:var(--orange)">5 minutes</strong>. Reload the page after confirmation.</div>
+      </div>
+
+      <button class="modal-cancel" onclick="closeModal()" style="margin-top:.5rem">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════ -->
+<script>
+/* ════════════════════════════════════════════
+   DATA STORE
+   ─────────────────────────────────────────
+   ADMIN: Edit the arrays below to update
+   daily Free Tips, VIP Tips, and Results.
+   ════════════════════════════════════════════ */
+
+// ── FREE TIPS (edit daily) ────────────────────
+// logo: path like "images/arsenal.png" OR full URL OR emoji string
+var FREE_TIPS = [];
+
+// ── VIP TIPS (locked for non-paying users) ────
+// Set vipUnlocked = true (in JS below) after confirming payment
+var VIP_TIPS = {
+  acc5:   [],
+  acc10:  [],
+  banker: []
+};
+
+// ── RESULTS (edit daily) ──────────────────────
+var RESULTS = {
+  yesterday: [],
+  free:      [],
+  vip:       []
+};
+
+/* ════════════════════════════════════════════
+   STATE
+   ════════════════════════════════════════════ */
+var vipUnlocked = false;   // Set true after confirming payment
+var currentCurr = 'USD';
+var currentVipTab = 'acc5';
+var currentResultTab = 'yesterday';
+var currentPayPanel = 'kenya';
+var selectedPlan = 'monthly';
+var adminTips = {free:[],vip:{acc5:[],acc10:[],banker:[]}};
+var adminResults = [];
+
+/* ════════════════════════════════════════════
+   CURRENCY PRICES
+   ════════════════════════════════════════════ */
+var PRICES = {
+  USD: {weekly:'$10', monthly:'$35', curr:'USD', save:'Save $5 vs weekly'},
+  KES: {weekly:'KSh 1,300', monthly:'KSh 4,500', curr:'KSh', save:'Save KSh 100 vs weekly'},
+  TZS: {weekly:'TSh 25,000', monthly:'TSh 87,000', curr:'TSh', save:'Save TSh 3,000 vs weekly'},
+  UGX: {weekly:'UGX 37,000', monthly:'UGX 128,000', curr:'UGX', save:'Save UGX 2,000 vs weekly'},
+  INR: {weekly:'₹830', monthly:'₹2,900', curr:'INR', save:'Save ₹100 vs weekly'},
+  NPR: {weekly:'NPR 1,330', monthly:'NPR 4,650', curr:'NPR', save:'Save NPR 150 vs weekly'},
+  BDT: {weekly:'BDT 1,100', monthly:'BDT 3,850', curr:'BDT', save:'Save BDT 150 vs weekly'},
+  PHP: {weekly:'₱560', monthly:'₱1,960', curr:'PHP', save:'Save ₱80 vs weekly'},
+};
+
+/* ════════════════════════════════════════════
+   HELPERS
+   ════════════════════════════════════════════ */
+function crestHTML(logo, team, size) {
+  size = size || 48;
+  if (!logo || logo === '⚽') return '<div class="crest" style="width:'+size+'px;height:'+size+'px;font-size:'+(size*.4)+'px">⚽</div>';
+  if (logo.startsWith('http') || logo.startsWith('images/') || logo.startsWith('/')) {
+    return '<div class="crest" style="width:'+size+'px;height:'+size+'px"><img src="'+logo+'" alt="'+team+'" loading="lazy" onerror="this.parentElement.innerHTML=\'⚽\'"></div>';
+  }
+  return '<div class="crest" style="width:'+size+'px;height:'+size+'px;font-size:'+(size*.45)+'px">'+logo+'</div>';
+}
+
+function rCrestHTML(logo, team) {
+  if (!logo || logo === '⚽') return '<div class="r-crest">⚽</div>';
+  if (logo.startsWith('http') || logo.startsWith('images/') || logo.startsWith('/'))
+    return '<div class="r-crest"><img src="'+logo+'" alt="'+team+'" loading="lazy" onerror="this.innerHTML=\'⚽\'"></div>';
+  return '<div class="r-crest">'+logo+'</div>';
+}
+
+function extractFlag(league) {
+  var match = (league||'').match(/^(\uD83C[\uDDE6-\uDDFF]\uD83C[\uDDE6-\uDDFF]|[\u{1F3F4}\u{1F3F3}]|[\u{1F1E6}-\u{1F1FF}][\u{1F1E6}-\u{1F1FF}]|\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62[\uDB40\uDC00-\uDB40\uDFFF]+\uDB40\uDC7F|[⚽🌍🌎🌏🌐🏆])/u);
+  return match ? match[0] : '⚽';
+}
+function formatTipDate(dateStr) {
+  if (!dateStr) return '';
+  try {
+    var d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  } catch(e){ return dateStr; }
+}
+function getTodayLocal() {
+  var d = new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function getMatchStatus(dateStr, timeStr) {
+  if (!timeStr || timeStr === 'TBD' || timeStr === '') return {status:'notstarted', minute:0, ht:false};
+  try {
+    var useDate = (dateStr && typeof dateStr === 'string' && dateStr.match(/^\d{4}-\d{2}-\d{2}$/))
+      ? dateStr : getTodayLocal();
+    var parts = timeStr.split(':');
+    var h = parseInt(parts[0]||0), m = parseInt(parts[1]||0);
+    var dp = useDate.split('-');
+    var kickoff = new Date(parseInt(dp[0]), parseInt(dp[1])-1, parseInt(dp[2]), h, m, 0, 0);
+    var now = new Date();
+    var diffMins = (now - kickoff) / 60000;
+    if (diffMins < 0)    return {status:'notstarted', minute:0,  ht:false};
+    if (diffMins < 45)   return {status:'live',       minute:Math.floor(diffMins), ht:false};
+    if (diffMins < 60)   return {status:'live',       minute:45, ht:true};
+    if (diffMins < 105)  return {status:'live',       minute:Math.floor(diffMins - 15), ht:false};
+    if (diffMins < 115)  return {status:'live',       minute:90, ht:false};
+    return {status:'ended', minute:90, ht:false};
+  } catch(e) { return {status:'notstarted', minute:0, ht:false}; }
+}
+function statusBadgeHTML(statusObj, timeStr) {
+  var status = statusObj.status;
+  var minute = statusObj.minute;
+  var ht     = statusObj.ht;
+  var timeHTML = (timeStr && timeStr !== 'TBD') ? '<span class="kick-time">⏰ '+timeStr+'</span>' : '';
+  if (status === 'live') {
+    var liveLabel = ht
+      ? '<span class="ms-badge ms-ht"><span class="ht-icon">HT</span></span>'
+      : '<span class="ms-badge ms-live"><span class="live-dot"></span>LIVE <span class="live-min">'+minute+'\'</span></span>';
+    return timeHTML + liveLabel;
+  }
+  if (status === 'ended')
+    return timeHTML + '<span class="ms-badge ms-ended">✅ ENDED</span>';
+  return timeHTML + '<span class="ms-badge ms-notstarted">🕐 Not Started</span>';
+}
+function buildMatchCard(tip, showLock) {
+  var locked = showLock && !vipUnlocked;
+  var banker = tip.banker ? '<span class="banker-tag">🏆 BANKER</span>' : '';
+  var predHTML = locked
+    ? '<div class="pred-chip locked" onclick="openModal()">🔒 Locked Prediction</div><button class="btn-outline" style="font-size:.72rem;padding:.3rem .8rem;border-radius:20px" onclick="openModal()">Unlock VIP</button>'
+    : '<div class="pred-chip">'+tip.prediction+banker+'</div><div class="odds-chip">'+tip.odds+'</div>';
+  var flag = extractFlag(tip.league||'');
+  var leagueDisplay = (tip.league||'').replace(/^\S+\s/,'');
+  var dateDisplay = tip.date ? formatTipDate(tip.date) : '';
+  var status = getMatchStatus(tip.date, tip.time);
+  var statusHTML = statusBadgeHTML(status, tip.time);
+  var cardClass = 'match-card'+(status.status==='live'?' is-live':status.status==='ended'?' is-ended':'');
+
+  // Live score
+  var score = (status.status === 'live' || status.status === 'ended') ? getLiveScore(tip) : null;
+  var score1HTML = score !== null ? '<div class="live-score">'+score.home+'</div>' : '';
+  var score2HTML = score !== null ? '<div class="live-score">'+score.away+'</div>' : '';
+
+  return '<div class="'+cardClass+'">'
+    +'<div class="mc-head">'
+    +'<div class="mc-head-left"><span class="league-flag">'+flag+'</span><span class="league-name">'+leagueDisplay+(dateDisplay?' · <span style="color:var(--muted);font-weight:600">'+dateDisplay+'</span>':'')+'</span></div>'
+    +'<div class="mc-head-right">'+statusHTML+'</div>'
+    +'</div>'
+    +'<div class="mc-body">'
+    +'<div class="teams-row">'
+    +'<div class="team-block">'+crestHTML(tip.logo1,tip.team1)+'<div class="team-name">'+tip.team1+'</div>'+score1HTML+'</div>'
+    +'<div class="vs-lbl">'+(score ? '<span class="score-vs">'+score.home+' - '+score.away+'</span>' : 'VS')+'</div>'
+    +'<div class="team-block">'+crestHTML(tip.logo2,tip.team2)+'<div class="team-name">'+tip.team2+'</div>'+score2HTML+'</div>'
+    +'</div>'
+    +'<div class="pred-row">'+predHTML+'</div>'
+    +'</div></div>';
+}
+
+function buildResultCard(r) {
+  var sMap = {win:['s-win','🟢 WON'],loss:['s-loss','🔴 LOSS'],void:['s-void','🟡 VOID']};
+  var s = sMap[r.status] || ['s-void','🟡 VOID'];
+  var oddsHTML = r.odds ? '<span class="r-odds-badge">@ '+parseFloat(r.odds).toFixed(2)+'</span>' : '';
+  return '<div class="result-card">'
+    +'<div class="result-head"><span class="result-league">'+r.league+'</span><span class="result-date">'+formatTipDate(r.date)+'</span></div>'
+    +'<div class="result-body">'
+    +'<div class="result-teams">'+rCrestHTML(r.logo1,r.team1)+'<div class="r-match">'+r.team1+' <span style="color:var(--muted)">vs</span> '+r.team2+'</div>'+rCrestHTML(r.logo2,r.team2)+'<div class="r-score">'+(r.score||'–')+'</div></div>'
+    +'<div class="result-bottom"><div class="r-pred">📌 '+r.prediction+' '+oddsHTML+'</div><span class="status-pill '+s[0]+'">'+s[1]+'</span></div>'
+    +'</div></div>';
+}
+
+function buildAccaSummary(results) {
+  // Only include settled (win/loss) tips with valid odds
+  var settled = results.filter(function(r){ return r.status === 'win' || r.status === 'loss'; });
+  if (!settled.length) return '';
+  var totalOdds = settled.reduce(function(p, r){ return p * (parseFloat(r.odds) || 1); }, 1);
+  var wonAll = settled.every(function(r){ return r.status === 'win'; });
+  var anyLoss = settled.some(function(r){ return r.status === 'loss'; });
+  var statusLabel = wonAll
+    ? '<span style="color:var(--win);font-weight:800">🟢 ALL WON</span>'
+    : anyLoss
+      ? '<span style="color:var(--loss);font-weight:800">🔴 LOST</span>'
+      : '<span style="color:var(--void);font-weight:800">🟡 PARTIAL</span>';
+  return '<div class="acca-summary">'
+    +'<div class="acca-summary-left"><strong>'+settled.length+' Game Accumulator</strong>'+statusLabel+'</div>'
+    +'<div style="text-align:right"><div class="acca-total-odds">'+totalOdds.toFixed(2)+'</div><div class="acca-total-label">TOTAL ODDS</div></div>'
+    +'</div>';
+}
+
+/* ════════════════════════════════════════════
+   RENDERS
+   ════════════════════════════════════════════ */
+function renderHome() {
+  var allFree = FREE_TIPS.concat(adminTips.free);
+  document.getElementById('home-free').innerHTML = allFree.slice(0,2).map(function(t){return buildMatchCard(t,false)}).join('');
+  var vSrc = VIP_TIPS.acc5.concat(adminTips.vip.acc5);
+  document.getElementById('home-vip').innerHTML = vSrc.slice(0,2).map(function(t){return buildMatchCard(t,true)}).join('');
+  var recentResults = RESULTS.yesterday.slice(0,3);
+  var resHTML = recentResults.length
+    ? buildAccaSummary(recentResults) + recentResults.map(buildResultCard).join('')
+    : '<div class="empty">No results yet</div>';
+  document.getElementById('home-results').innerHTML = resHTML;
+  calculateWinRates();
+  updateVipOddsBadges();
+}
+
+var freePredFilter = 'All';
+function getPredCategory(tip) {
+  var pred = (tip.prediction || tip.predType || '').toLowerCase();
+  if (pred.includes('over') || pred.includes('under')) return 'Over/Under';
+  if (pred.includes('btts') || pred.includes('both teams')) return 'BTTS';
+  if (pred.includes('home win') || pred.includes('away win') || pred.includes('draw') || pred.includes('match winner')) return 'Match Winner';
+  if (pred.includes('double chance')) return 'Double Chance';
+  return tip.predType || 'Match Winner';
+}
+function renderFreeTips() {
+  var all = FREE_TIPS.concat(adminTips.free);
+  var filtered = freePredFilter === 'All' ? all : all.filter(function(t){
+    return getPredCategory(t) === freePredFilter;
+  });
+  document.getElementById('free-tips-list').innerHTML = filtered.length
+    ? filtered.map(function(t){return buildMatchCard(t,false)}).join('')
+    : '<div class="empty">No tips for this filter today.</div>';
+}
+
+function renderVipTips() {
+  var src = vipUnlocked ? VIP_TIPS : VIP_TIPS;
+  var tabData = (VIP_TIPS[currentVipTab] || []).concat(adminTips.vip[currentVipTab] || []);
+  document.getElementById('vip-tips-list').innerHTML = tabData.length
+    ? tabData.map(function(t){return buildMatchCard(t,!vipUnlocked)}).join('')
+    : '<div class="empty">No predictions for this tab today.</div>';
+}
+
+function renderResults() {
+  var today = getTodayLocal();
+
+  var allAdmin = adminResults.concat(window._firebaseTipsWithResults || []);
+
+  var data;
+  if (currentResultTab === 'yesterday') {
+    data = allAdmin.filter(function(r) {
+      var d = r.date || r.matchDate || '';
+      return d === today || d === '' || !d;
+    });
+    data = (RESULTS.yesterday || []).concat(data);
+  } else {
+    data = (RESULTS[currentResultTab] || []).concat(
+      allAdmin.filter(function(r){ return r.tab === currentResultTab; })
+    );
+  }
+
+  if (!data.length) {
+    document.getElementById('results-list').innerHTML = '<div class="empty">No results available yet.</div>';
+    return;
+  }
+
+  // Group by date
+  var groups = {};
+  var groupOrder = [];
+  data.forEach(function(r) {
+    var key = r.date || today;
+    if (!groups[key]) { groups[key] = []; groupOrder.push(key); }
+    groups[key].push(r);
+  });
+
+  // Sort dates newest first
+  groupOrder.sort(function(a,b){ return b.localeCompare(a); });
+
+  var html = '';
+  groupOrder.forEach(function(date) {
+    var groupTips = groups[date];
+    // Date header
+    html += '<div class="result-date-group">📅 ' + formatTipDate(date) + '</div>';
+    // Acca summary for this date group
+    html += buildAccaSummary(groupTips);
+    // Individual cards
+    html += groupTips.map(buildResultCard).join('');
+  });
+
+  document.getElementById('results-list').innerHTML = html;
+}
+
+/* ════════════════════════════════════════════
+   PAGE NAV
+   ════════════════════════════════════════════ */
+var pages = ['home','free','vip','results','profile','admin'];
+function showPage(name) {
+  pages.forEach(function(p){
+    document.getElementById('page-'+p).classList.remove('active');
+    var n = document.getElementById('nav-'+p);
+    if(n) n.classList.remove('active');
+  });
+  document.getElementById('page-'+name).classList.add('active');
+  var navEl = document.getElementById('nav-'+name);
+  if(navEl) navEl.classList.add('active');
+  window.scrollTo(0,0);
+  if(name==='home') renderHome();
+  else if(name==='free') renderFreeTips();
+  else if(name==='vip') renderVipTips();
+  else if(name==='results') renderResults();
+}
+
+/* ════════════════════════════════════════════
+   AUTO WIN RATE CALCULATOR
+   ════════════════════════════════════════════ */
+function calculateWinRates() {
+  var allResults = [];
+  ['yesterday','free','vip'].forEach(function(tab){
+    (RESULTS[tab]||[]).forEach(function(r){ allResults.push(r); });
+  });
+
+  var freeResults = allResults.filter(function(r){ return r.section === 'free' || !r.section; });
+  var vipResults  = allResults.filter(function(r){ return r.section === 'vip'; });
+  var acc5Results = allResults.filter(function(r){ return r.vipTab === 'acc5'; });
+  var acc10Results= allResults.filter(function(r){ return r.vipTab === 'acc10'; });
+  var bankerResults= allResults.filter(function(r){ return r.vipTab === 'banker'; });
+
+  function calcRate(arr) {
+    var total = arr.filter(function(r){ return r.status === 'win' || r.status === 'loss'; }).length;
+    var won   = arr.filter(function(r){ return r.status === 'win'; }).length;
+    if (!total) return null;
+    return { pct: Math.round(won/total*100), won: won, total: total };
+  }
+
+  var freeRate  = calcRate(freeResults);
+  var vipRate   = calcRate(vipResults.length ? vipResults : allResults.filter(function(r){return r.section==='vip'||r.vipTab}));
+  var acc5Rate  = calcRate(acc5Results);
+  var acc10Rate = calcRate(acc10Results);
+  var bankerRate= calcRate(bankerResults);
+
+  // Update hero + acc strip
+  if (freeRate) {
+    var fp = freeRate.pct+'%';
+    var fs = freeRate.won+' of '+freeRate.total+' tips';
+    ['hero-free-rate','acc-free-rate'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=fp; });
+    var sub = document.getElementById('acc-free-sub'); if(sub) sub.textContent = fs;
+    var bar = document.getElementById('acc-free-bar'); if(bar) bar.style.width = freeRate.pct+'%';
+  }
+  if (vipRate) {
+    var vp = vipRate.pct+'%';
+    var vs = vipRate.won+' of '+vipRate.total+' tips';
+    ['hero-vip-rate','acc-vip-rate'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=vp; });
+    var vsub = document.getElementById('acc-vip-sub'); if(vsub) vsub.textContent = vs;
+    var vbar = document.getElementById('acc-vip-bar'); if(vbar) vbar.style.width = vipRate.pct+'%';
+  }
+
+  // Update VIP tab won rates
+  function setTabRate(tabId, rate) {
+    var el = document.getElementById('winrate-'+tabId);
+    if (!el) return;
+    if (rate) el.textContent = '📊 Won Rate: '+rate.pct+'% ('+rate.won+'/'+rate.total+' tips)';
+    else el.textContent = '📊 Won Rate: Not enough data yet';
+  }
+  setTabRate('acc5',   acc5Rate   || vipRate);
+  setTabRate('acc10',  acc10Rate  || vipRate);
+  setTabRate('banker', bankerRate || vipRate);
+
+  // Also update admin analytics if elements exist
+  var sfr = document.getElementById('stat-free-rate'); if(sfr && freeRate) sfr.textContent = freeRate.pct+'%';
+  var svr = document.getElementById('stat-vip-rate');  if(svr && vipRate)  svr.textContent = vipRate.pct+'%';
+}
+
+/* ════════════════════════════════════════════
+   VIP EXPIRY COUNTDOWN
+   ════════════════════════════════════════════ */
+function showVipExpiry(expiryDate) {
+  var bar = document.getElementById('vip-expiry-bar');
+  if (!bar || !expiryDate) return;
+  var expiry = new Date(expiryDate);
+  var now    = new Date();
+  var daysLeft = Math.ceil((expiry - now) / (1000*60*60*24));
+  if (daysLeft > 0 && daysLeft <= 7) {
+    bar.style.display = 'block';
+    bar.textContent = '⚡ Your VIP expires in ' + daysLeft + ' day' + (daysLeft===1?'':'s') + ' — Renew now to keep access!';
+  } else if (daysLeft <= 0) {
+    bar.style.display = 'block';
+    bar.style.color = '#EF4444';
+    bar.style.borderColor = 'rgba(239,68,68,.3)';
+    bar.textContent = '❌ Your VIP has expired — Please renew to restore access.';
+  } else {
+    bar.style.display = 'none';
+  }
+}
+
+/* ════════════════════════════════════════════
+   UPDATE TOTAL ODDS BADGES PER TAB
+   ════════════════════════════════════════════ */
+function updateVipOddsBadges() {
+  function totalOdds(tips) {
+    if (!tips || !tips.length) return null;
+    var t = tips.reduce(function(p,tip){ return p * parseFloat(tip.odds||1); }, 1);
+    return t.toFixed(2);
+  }
+  var tabs = { acc5: VIP_TIPS.acc5, acc10: VIP_TIPS.acc10, banker: VIP_TIPS.banker };
+  ['acc5','acc10','banker'].forEach(function(tab){
+    var el = document.getElementById('total-odds-'+tab);
+    if (!el) return;
+    var odds = totalOdds((tabs[tab]||[]).concat((adminTips.vip[tab]||[])));
+    if (odds) el.innerHTML = '<strong>'+odds+'</strong>Total Odds';
+    else el.innerHTML = '<strong>–</strong>Total Odds';
+  });
+}
+function filterFree(type, el) {
+  freePredFilter = type;
+  document.querySelectorAll('.fp').forEach(function(f){f.classList.remove('active')});
+  el.classList.add('active');
+  renderFreeTips();
+}
+
+function switchVipTab(tab, el) {
+  currentVipTab = tab;
+  document.querySelectorAll('#page-vip .tab-btn').forEach(function(b){b.classList.remove('active')});
+  el.classList.add('active');
+  // Show/hide plan info blocks
+  ['acc5','acc10','banker'].forEach(function(t){
+    var pi = document.getElementById('vip-plan-info-'+t);
+    if(pi) pi.style.display = (t===tab) ? 'block' : 'none';
+  });
+  renderVipTips();
+}
+
+function switchResultTab(tab, el) {
+  currentResultTab = tab;
+  document.querySelectorAll('#page-results .tab-btn').forEach(function(b){b.classList.remove('active')});
+  el.classList.add('active');
+  renderResults();
+}
+
+/* ════════════════════════════════════════════
+   CURRENCY
+   ════════════════════════════════════════════ */
+function setCurr(curr, el) {
+  currentCurr = curr;
+  document.querySelectorAll('.curr-btn').forEach(function(b){b.classList.remove('active')});
+  el.classList.add('active');
+  var p = PRICES[curr];
+  document.getElementById('price-weekly').textContent = p.weekly;
+  document.getElementById('pcurr-weekly').textContent = p.curr + ' / week';
+  document.getElementById('price-monthly').textContent = p.monthly;
+  document.getElementById('pcurr-monthly').textContent = p.curr + ' / month';
+  document.getElementById('save-monthly').textContent = p.save;
+}
+
+function selectPlan(plan, el) {
+  selectedPlan = plan;
+  document.querySelectorAll('.plan-card').forEach(function(c){c.classList.remove('popular')});
+  el.classList.add('popular');
+}
+
+/* ════════════════════════════════════════════
+   MODAL
+   ════════════════════════════════════════════ */
+function togglePayDetails(id, el) {
+  const box = document.getElementById(id);
+  const isOpen = box.classList.contains('open');
+  // Close all open ones in same panel
+  box.closest('.payment-panel').querySelectorAll('.pay-details').forEach(d => d.classList.remove('open'));
+  box.closest('.payment-panel').querySelectorAll('.payment-method span:last-child').forEach(s => s.textContent = '▼');
+  if (!isOpen) {
+    box.classList.add('open');
+    el.querySelector('span:last-child').textContent = '▲';
+  }
+}
+
+function openModal() {
+  document.getElementById('payment-modal').classList.add('show');
+}
+function closeModal() {
+  document.getElementById('payment-modal').classList.remove('show');
+}
+function handleModalClick(e) {
+  if(e.target === document.getElementById('payment-modal')) closeModal();
+}
+
+function showPayPanel(country, el) {
+  currentPayPanel = country;
+  document.querySelectorAll('.ctab').forEach(function(t){t.classList.remove('active')});
+  el.classList.add('active');
+  document.querySelectorAll('.payment-panel').forEach(function(p){p.classList.remove('show')});
+  document.getElementById('panel-'+country).classList.add('show');
+}
+
+function submitPayment() {
+  // Payment is now handled via WhatsApp/Email contact + email proof submission
+  closeModal();
+  showToast('📧 Send payment proof to our email — VIP activates in 5 mins!','info');
+}
+
+/* ════════════════════════════════════════════
+   ADMIN
+   ════════════════════════════════════════════ */
+function checkAdminPwd() {
+  // ⚠️ Change this password before deploying!
+  var pwd = document.getElementById('admin-pwd-input').value;
+  if(pwd === 'admin2024!') {
+    document.getElementById('admin-lock').style.display = 'none';
+    document.getElementById('admin-content').style.display = 'block';
+    showToast('✅ Admin access granted','success');
+  } else {
+    showToast('❌ Incorrect password','info');
+    document.getElementById('admin-pwd-input').value = '';
+  }
+}
+
+function showAdminPanel(panel, el) {
+  document.querySelectorAll('.at-btn').forEach(function(b){b.classList.remove('active')});
+  el.classList.add('active');
+  document.querySelectorAll('.admin-panel').forEach(function(p){p.classList.remove('show')});
+  var el2 = document.getElementById('ap-'+panel);
+  if(el2) el2.classList.add('show');
+  if(panel === 'updateresults') buildUpdateResultsList();
+}
+
+var sessionPosts = [];
+function adminPostTip() {
+  var t1 = document.getElementById('a-t1').value.trim();
+  var t2 = document.getElementById('a-t2').value.trim();
+  if(!t1||!t2){showToast('⚠️ Enter both team names','info');return;}
+  var tip = {
+    team1:t1, team2:t2,
+    league:document.getElementById('a-league').value,
+    time:document.getElementById('a-time').value || 'TBD',
+    prediction:document.getElementById('a-pred-type').value,
+    predType:document.getElementById('a-pred-type').value.split(' ')[0],
+    odds:document.getElementById('a-odds').value || '?',
+    logo1:document.getElementById('a-logo1').value.trim() || '⚽',
+    logo2:document.getElementById('a-logo2').value.trim() || '⚽',
+  };
+  var section = document.getElementById('a-section').value;
+  if(section === 'free') {
+    adminTips.free.push(tip);
+  } else {
+    adminTips.vip.acc5.push(tip);
+  }
+  sessionPosts.unshift({...tip, section});
+  var rp = document.getElementById('recent-posts');
+  rp.innerHTML = sessionPosts.slice(0,6).map(function(p){
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--line)">'
+      +'<div><div style="font-size:.82rem;font-weight:700">'+p.team1+' vs '+p.team2+'</div>'
+      +'<div style="font-size:.7rem;color:var(--muted)">'+p.prediction+' · '+(p.section==='free'?'Free':'VIP')+'</div></div>'
+      +'<span style="font-size:.82rem;color:var(--orange);font-weight:800">'+p.odds+'</span></div>';
+  }).join('');
+  showToast('✅ "'+t1+' vs '+t2+'" posted to '+(section==='free'?'Free':'VIP')+' Tips!','success');
+  ['a-t1','a-t2','a-time','a-odds','a-logo1','a-logo2'].forEach(function(id){document.getElementById(id).value=''});
+}
+
+function buildUpdateResultsList() {
+  var all = FREE_TIPS.concat(adminTips.free)
+    .concat(VIP_TIPS.acc5).concat(adminTips.vip.acc5);
+  var el = document.getElementById('update-results-list');
+  if(!all.length){el.innerHTML='<p style="font-size:.8rem;color:var(--muted)">No predictions posted yet.</p>';return;}
+  el.innerHTML = all.slice(0,8).map(function(t,i){
+    return '<div class="upd-row">'
+      +'<div class="upd-match"><div class="um-teams">'+t.team1+' vs '+t.team2+'</div><div class="um-pred">'+t.prediction+'</div></div>'
+      +'<input placeholder="2-1" id="usc-'+i+'">'
+      +'<select id="ust-'+i+'"><option value="win">WIN</option><option value="loss">LOSS</option><option value="void">VOID</option></select>'
+      +'<button class="upd-save" onclick="saveResult('+i+',\''+t.team1+'\',\''+t.team2+'\',\''+t.prediction+'\',\''+t.league+'\',\''+(t.logo1||'⚽')+'\',\''+(t.logo2||'⚽')+'\')" >Save</button>'
+      +'</div>';
+  }).join('');
+}
+
+function saveResult(i,t1,t2,pred,league,logo1,logo2) {
+  var score = document.getElementById('usc-'+i).value;
+  var status = document.getElementById('ust-'+i).value;
+  if(!score){showToast('⚠️ Enter a score first','info');return;}
+  adminResults.push({
+    team1:t1,team2:t2,logo1:logo1,logo2:logo2,
+    league:league,date:'Today',score:score,prediction:pred,status:status,tab:'yesterday'
+  });
+  showToast('✅ Result saved: '+t1+' '+score+' '+t2,'success');
+  buildUpdateResultsList();
+}
+
+function confirmSub(el) {
+  el.className = 'badge-active';
+  el.textContent = 'Active';
+  el.onclick = null;
+  showToast('✅ Subscription confirmed and activated!','success');
+}
+
+function manualUnlock() {
+  var user = document.getElementById('unlock-user').value.trim();
+  if(!user){showToast('⚠️ Enter user identifier','info');return;}
+  vipUnlocked = true;
+  document.getElementById('vip-badge-profile').textContent = '⚡ VIP Active';
+  document.getElementById('vip-badge-profile').style.color = 'var(--orange)';
+  showToast('✅ VIP unlocked for: '+user,'success');
+  renderHome();
+  renderVipTips();
+}
+
+function updateNotifBanner() {
+  var msg = document.getElementById('notif-msg').value.trim();
+  if(!msg){showToast('⚠️ Enter a message','info');return;}
+  var banner = document.querySelector('.notif-banner p');
+  if(banner) banner.innerHTML = msg;
+  showToast('📣 Notification banner updated!','success');
+}
+
+/* ════════════════════════════════════════════
+   TOAST
+   ════════════════════════════════════════════ */
+var toastTimer;
+function showToast(msg, type) {
+  clearTimeout(toastTimer);
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show '+(type||'info');
+  toastTimer = setTimeout(function(){t.classList.remove('show')}, 3500);
+}
+
+/* ════════════════════════════════════════════
+   SLIDERS — AUTO-SLIDE ENGINE
+   ════════════════════════════════════════════ */
+function initSlider(trackId, dotsId, cardWidth, gap, intervalMs) {
+  var track   = document.getElementById(trackId);
+  var dotsEl  = document.getElementById(dotsId);
+  if (!track || !dotsEl) return;
+
+  var cards   = track.children;
+  var total   = cards.length;
+  var current = 0;
+  var step    = cardWidth + gap; // px per slide
+
+  // Build dots
+  dotsEl.innerHTML = '';
+  for (var i = 0; i < total; i++) {
+    var d = document.createElement('div');
+    d.className = 'sl-dot' + (i === 0 ? ' active' : '');
+    dotsEl.appendChild(d);
+  }
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    track.style.transform = 'translateX(-' + (current * step) + 'px)';
+    var dots = dotsEl.querySelectorAll('.sl-dot');
+    dots.forEach(function(d, i){ d.className = 'sl-dot' + (i === current ? ' active' : ''); });
+  }
+
+  // Auto-slide
+  var timer = setInterval(function(){ goTo(current + 1); }, intervalMs);
+
+  // Pause on touch
+  track.parentElement.addEventListener('touchstart', function(){ clearInterval(timer); }, {passive:true});
+  track.parentElement.addEventListener('touchend', function(){
+    timer = setInterval(function(){ goTo(current + 1); }, intervalMs);
+  }, {passive:true});
+
+  // Touch swipe support
+  var startX = 0;
+  track.parentElement.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
+  track.parentElement.addEventListener('touchend', function(e){
+    var diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+  }, {passive:true});
+}
+
+/* ════════════════════════════════════════════
+   INIT
+   ════════════════════════════════════════════ */
+renderHome();
+
+// Ticket cards: 200px wide + 12px gap, auto-slide every 3.5s
+initSlider('ticket-track', 'ticket-dots', 200, 12, 3500);
+// Testimonial cards: 260px wide + 12px gap, auto-slide every 4.5s
+initSlider('testi-track',  'testi-dots',  260, 12, 4500);
+</script>
+
+<!-- ══ FIREBASE — LIVE DATA ══ -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getFirestore, collection, getDocs, getDoc, doc, query, orderBy, where, addDoc, serverTimestamp }
+  from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+/* ══════════════════════════════════════════
+   🔥 FIREBASE CONFIG
+   Replace these values with YOUR Firebase project config
+   Get them from: Firebase Console → Project Settings → Your Apps
+══════════════════════════════════════════ */
+const firebaseConfig = {
+  apiKey: "AIzaSyD7HSqyF8SMC3sgYI49O0_qnk4ECrs4Cx4",
+  authDomain: "oddsmaster-pro.firebaseapp.com",
+  projectId: "oddsmaster-pro",
+  storageBucket: "oddsmaster-pro.firebasestorage.app",
+  messagingSenderId: "709913061920",
+  appId: "1:709913061920:web:d78ec9b6cc3e93903f2a45"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+/* ── LOAD ALL TIPS FROM FIREBASE ── */
+async function loadFirebaseTips() {
+  try {
+    const snap = await getDocs(query(collection(db,'tips'), orderBy('createdAt','desc')));
+    const tips = snap.docs.map(d => ({id:d.id,...d.data()}));
+
+    // TODAY's tips (pending/not started) — for Free and VIP display
+    const todayStr = getTodayLocal();
+    const todayTips = tips.filter(t => {
+      var d = t.date || '';
+      // Fix year if corrupted
+      if (d && d.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        var yr = parseInt(d.substring(0,4));
+        if (yr < 2024) d = new Date().getFullYear() + d.substring(4);
+      }
+      return d === todayStr || d === '';
+    });
+
+    // If no tips for today, show the most recent ones anyway
+    var displayTips = todayTips.length ? todayTips : tips.slice(0, 10);
+
+    const freeTips  = displayTips.filter(t => t.section === 'free');
+    const vipAcc5   = displayTips.filter(t => t.section === 'vip' && t.vipTab === 'acc5');
+    const vipAcc10  = displayTips.filter(t => t.section === 'vip' && t.vipTab === 'acc10');
+    const vipBanker = displayTips.filter(t => t.section === 'vip' && t.vipTab === 'banker');
+
+    // Always override with Firebase data
+    FREE_TIPS          = freeTips.map(mapTip);
+    VIP_TIPS.acc5      = vipAcc5.map(mapTip);
+    VIP_TIPS.acc10     = vipAcc10.map(mapTip);
+    VIP_TIPS.banker    = vipBanker.map(mapTip);
+
+    // Build results — ALL tips that have a score and a settled status
+    const withScore = tips.filter(t => t.score && t.status && t.status !== 'pending');
+
+    if (withScore.length) {
+      // Group all results — split by section
+      const allMapped = withScore.map(mapResult);
+      const freeRes   = allMapped.filter(r => r.section === 'free');
+      const vipRes    = allMapped.filter(r => r.section === 'vip');
+
+      RESULTS.yesterday = allMapped; // "Previous" tab shows ALL results
+      if (freeRes.length)  RESULTS.free = freeRes;
+      if (vipRes.length)   RESULTS.vip  = vipRes;
+    }
+
+    // Re-render everything
+    renderHome();
+    renderFreeTips();
+    renderVipTips();
+    renderResults();
+    calculateWinRates();
+    updateVipOddsBadges();
+
+  } catch(e) {
+    console.log('Firebase tips load error:', e.message);
+  }
+}
+
+function mapTip(t) {
+  // Extract date string safely - fix year if corrupted
+  var dateVal = '';
+  if (t.date && typeof t.date === 'string') dateVal = t.date;
+  else if (t.matchDate && typeof t.matchDate === 'string') dateVal = t.matchDate;
+
+  // Fix corrupted year — if year is not 2024/2025/2026, replace with today's year
+  if (dateVal && dateVal.match(/^\d{4}-\d{2}-\d{2}$/)) {
+    var year = parseInt(dateVal.substring(0,4));
+    if (year < 2024) {
+      var correctYear = new Date().getFullYear();
+      dateVal = correctYear + dateVal.substring(4);
+    }
+  }
+
+  return {
+    team1:          t.team1,
+    team2:          t.team2,
+    logo1:          t.logo1 || '⚽',
+    logo2:          t.logo2 || '⚽',
+    league:         t.league,
+    time:           t.time || '',
+    date:           dateVal,
+    prediction:     t.prediction,
+    predType:       t.predType || '',
+    odds:           t.odds,
+    banker:         t.banker || false,
+    liveScoreHome:  t.liveScoreHome,
+    liveScoreAway:  t.liveScoreAway,
+    _id:            t.id
+  };
+}
+
+function mapResult(t) {
+  return {
+    team1:      t.team1,
+    team2:      t.team2,
+    logo1:      t.logo1 || '⚽',
+    logo2:      t.logo2 || '⚽',
+    league:     t.league,
+    date:       t.date || getTodayLocal(),
+    score:      t.score,
+    prediction: t.prediction,
+    status:     t.status,
+    section:    t.section || 'free',
+    vipTab:     t.vipTab  || '',
+    odds:       t.odds    || ''
+  };
+}
+
+/* ── LOAD NOTIFICATION BANNER ── */
+async function loadNotification() {
+  try {
+    const d = await getDoc(doc(db,'settings','notification'));
+    if (d.exists()) {
+      const msg = d.data().message;
+      const banner = document.querySelector('.notif-banner p');
+      if (banner) banner.innerHTML = msg;
+    }
+  } catch(e) {}
+}
+
+/* ── CHECK VIP STATUS FOR CURRENT USER ── */
+async function checkVipStatus() {
+  // Check by phone number stored in localStorage
+  const userPhone = localStorage.getItem('om_user_phone');
+  if (!userPhone) return;
+  try {
+    const snap = await getDocs(
+      query(collection(db,'vip_users'),
+        where('user','==', userPhone),
+        where('active','==', true)
+      )
+    );
+    if (!snap.empty) {
+      vipUnlocked = true;
+      const userData = snap.docs[0].data();
+      const badge = document.getElementById('vip-badge-profile');
+      if (badge) {
+        badge.textContent = '⚡ VIP Active';
+        badge.style.color = 'var(--orange)';
+      }
+      // Show expiry countdown
+      if (userData.expiry) showVipExpiry(userData.expiry);
+      renderHome();
+      renderVipTips();
+    }
+  } catch(e) {}
+}
+
+/* ── OVERRIDE submitPayment to save phone ── */
+const origSubmit = window.submitPayment;
+window.submitPayment = function() {
+  const phone = document.getElementById('pay-phone').value.trim();
+  if (phone) localStorage.setItem('om_user_phone', phone);
+  if (origSubmit) origSubmit();
+};
+
+/* ── LOAD PAYMENT SETTINGS ── */
+async function loadPaymentSettings() {
+  try {
+    const d = await getDoc(doc(db,'settings','payments'));
+    if (!d.exists()) return;
+    const p = d.data();
+    const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.textContent = val; };
+    set('pd-ke-paybill',  p.ke_paybill);
+    set('pd-ke-account',  p.ke_account);
+    set('pd-ke-airtel',   p.ke_airtel);
+    set('pd-ke-bank',     p.ke_bank);
+    set('pd-ke-bankno',   p.ke_bankno);
+    set('pd-tz-tigo',     p.tz_tigo);
+    set('pd-tz-mpesa',    p.tz_mpesa);
+    set('pd-ug-mtn',      p.ug_mtn);
+    set('pd-ug-airtel',   p.ug_airtel);
+    set('pd-in-upi',      p.in_upi);
+    set('pd-in-paytm',    p.in_paytm);
+    set('pd-np-esewa',    p.np_esewa);
+    set('pd-bd-bkash',    p.bd_bkash);
+    set('pd-ph-gcash',    p.ph_gcash);
+    set('pd-usd-paypal',  p.usd_paypal);
+    set('pd-usd-bank',    p.usd_bank);
+    set('pd-usd-swift',   p.usd_swift);
+    // WhatsApp number
+    if (p.whatsapp) {
+      const waLinks = document.querySelectorAll('a[href*="wa.me"]');
+      waLinks.forEach(a => {
+        const msg = encodeURIComponent('Hi, I want to subscribe to OddsMaster Pro VIP Tips. Please send me payment details.');
+        a.href = 'https://wa.me/' + p.whatsapp.replace(/[^0-9]/g,'') + '?text=' + msg;
+      });
+    }
+  } catch(e) {}
+}
+
+/* ── LOAD WINNING TICKETS ── */
+async function loadTickets() {
+  try {
+    const snap = await getDocs(query(collection(db,'tickets'), orderBy('createdAt','desc')));
+    if (snap.empty) return;
+    const tickets = snap.docs.map(d => d.data());
+    const track = document.getElementById('ticket-track');
+    if (!track) return;
+    track.innerHTML = tickets.map(t => `
+      <div class="ticket-card">
+        <div class="ticket-card-img ${t.imageUrl ? '' : 'ticket-placeholder'}">
+          ${t.imageUrl
+            ? '<img src="'+t.imageUrl+'" alt="Winning Ticket" onerror="this.parentElement.innerHTML=\'<div class=tp-icon>🎫</div>\'">'
+            : '<div class="tp-icon">🎫</div><span>Ticket Screenshot</span>'}
+        </div>
+        <div class="ticket-badge">✅ WON</div>
+        <div class="ticket-info">
+          <div class="ti-odds">Odds: ${t.odds}</div>
+          <div class="ti-meta">${t.type} · ${t.date}</div>
+          <div class="ti-profit">${t.profit}</div>
+        </div>
+      </div>
+    `).join('');
+    initSlider('ticket-track', 'ticket-dots', 200, 12, 3500);
+  } catch(e) {}
+}
+
+/* ── LOAD TESTIMONIALS ── */
+async function loadTestimonials() {
+  try {
+    const snap = await getDocs(query(collection(db,'testimonials'), orderBy('createdAt','desc')));
+    if (snap.empty) return;
+    const testimonials = snap.docs.map(d => d.data());
+    const track = document.getElementById('testi-track');
+    if (!track) return;
+    track.innerHTML = testimonials.map(t => `
+      <div class="testi-card">
+        <div class="testi-stars">${'⭐'.repeat(t.stars || 5)}</div>
+        <p class="testi-text">"${t.message}"</p>
+        <div class="testi-author">
+          <div class="testi-avatar">${t.name.charAt(0).toUpperCase()}</div>
+          <div>
+            <div class="testi-name">${t.name}</div>
+            <div class="testi-country">${t.country || ''}</div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    initSlider('testi-track', 'testi-dots', 260, 12, 4500);
+  } catch(e) {}
+}
+
+/* ── PAYMENT PROOF SUBMISSION ── */
+window.submitPaymentProof = async function() {
+  const name   = document.getElementById('pay-name').value.trim();
+  const phone  = document.getElementById('pay-phone').value.trim();
+  const txid   = document.getElementById('pay-txid').value.trim().toUpperCase();
+  const plan   = document.getElementById('pay-plan').value;
+  const method = document.getElementById('pay-method').value;
+  const errEl  = document.getElementById('pay-submit-err');
+  errEl.textContent = '';
+
+  if (!name)  { errEl.textContent = '⚠️ Please enter your name'; return; }
+  if (!phone) { errEl.textContent = '⚠️ Please enter your phone number'; return; }
+  if (!txid)  { errEl.textContent = '⚠️ Please enter your transaction ID'; return; }
+
+  try {
+    await addDoc(collection(db, 'payment_requests'), {
+      name, phone, txid, plan, method,
+      status: 'pending',
+      submittedAt: serverTimestamp()
+    });
+    // Save phone for VIP check
+    localStorage.setItem('om_user_phone', phone);
+    // Show success message
+    document.getElementById('pay-form-wrap').style.display = 'none';
+    document.getElementById('pay-success-msg').style.display = 'block';
+  } catch(e) {
+    errEl.textContent = '❌ Error submitting. Please try again.';
+  }
+};
+
+/* ── RUN ── */
+loadFirebaseTips();
+loadNotification();
+checkVipStatus();
+loadTickets();
+loadTestimonials();
+loadPaymentSettings();
+
+function getLiveScore(tip) {
+  if (tip.liveScoreHome !== undefined && tip.liveScoreAway !== undefined) {
+    return { home: tip.liveScoreHome, away: tip.liveScoreAway };
+  }
+  return null;
+}
+
+/* ── AUTO-REFRESH STATUS every 60 seconds — updates live minute counter ── */
+setInterval(function() {
+  renderHome();
+  renderFreeTips();
+  renderVipTips();
+}, 60000);
+
+</script>
+</body>
+</html>
